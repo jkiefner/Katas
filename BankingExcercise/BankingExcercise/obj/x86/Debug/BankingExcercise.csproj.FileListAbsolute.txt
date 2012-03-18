@@ -1,0 +1,5 @@
+C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\working\BankingExcercise\BankingExcercise\BankingExcercise\bin\Debug\BankingExcercise.exe
+C:\working\BankingExcercise\BankingExcercise\BankingExcercise\bin\Debug\BankingExcercise.pdb
+C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Debug\BankingExcercise.exe
+C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Debug\BankingExcercise.pdb

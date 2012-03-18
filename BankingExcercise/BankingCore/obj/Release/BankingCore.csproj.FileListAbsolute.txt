@@ -1,0 +1,5 @@
+C:\working\BankingExcercise\BankingExcercise\BankingCore\bin\Release\BankingCore.dll
+C:\working\BankingExcercise\BankingExcercise\BankingCore\bin\Release\BankingCore.pdb
+C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\ResolveAssemblyReference.cache
+C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\BankingCore.dll
+C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\BankingCore.pdb
