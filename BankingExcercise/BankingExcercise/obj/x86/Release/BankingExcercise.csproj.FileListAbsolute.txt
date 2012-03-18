@@ -5,3 +5,10 @@ C:\working\BankingExcercise\BankingExcercise\BankingExcercise\bin\Release\Bankin
 C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Release\ResolveAssemblyReference.cache
 C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Release\BankingExcercise.exe
 C:\working\BankingExcercise\BankingExcercise\BankingExcercise\obj\x86\Release\BankingExcercise.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\bin\Release\BankingExcercise.exe
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\bin\Release\BankingExcercise.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\bin\Release\BankingCore.dll
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\bin\Release\BankingCore.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\obj\x86\Release\ResolveAssemblyReference.cache
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\obj\x86\Release\BankingExcercise.exe
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcercise\obj\x86\Release\BankingExcercise.pdb

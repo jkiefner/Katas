@@ -7,3 +7,12 @@ C:\working\BankingExcercise\BankingExcercise\BankingExcerciseTests\bin\Release\n
 C:\working\BankingExcercise\BankingExcercise\BankingExcerciseTests\obj\Release\ResolveAssemblyReference.cache
 C:\working\BankingExcercise\BankingExcercise\BankingExcerciseTests\obj\Release\BankingExcerciseTests.dll
 C:\working\BankingExcercise\BankingExcercise\BankingExcerciseTests\obj\Release\BankingExcerciseTests.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\BankingExcerciseTests.dll
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\BankingExcerciseTests.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\BankingExcercise.exe
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\nunit.framework.dll
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\BankingExcercise.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\bin\Release\nunit.framework.xml
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\obj\Release\ResolveAssemblyReference.cache
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\obj\Release\BankingExcerciseTests.dll
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingExcerciseTests\obj\Release\BankingExcerciseTests.pdb
