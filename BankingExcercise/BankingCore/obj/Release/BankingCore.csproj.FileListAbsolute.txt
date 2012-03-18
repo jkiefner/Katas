@@ -3,6 +3,7 @@ C:\working\BankingExcercise\BankingExcercise\BankingCore\bin\Release\BankingCore
 C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\ResolveAssemblyReference.cache
 C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\BankingCore.dll
 C:\working\BankingExcercise\BankingExcercise\BankingCore\obj\Release\BankingCore.pdb
+C:\working\BankingExcercise\Katas\BankingExcercise\BankingCore\bin\Release\Resources\Customers.xml
 C:\working\BankingExcercise\Katas\BankingExcercise\BankingCore\bin\Release\BankingCore.dll
 C:\working\BankingExcercise\Katas\BankingExcercise\BankingCore\bin\Release\BankingCore.pdb
 C:\working\BankingExcercise\Katas\BankingExcercise\BankingCore\obj\Release\ResolveAssemblyReference.cache

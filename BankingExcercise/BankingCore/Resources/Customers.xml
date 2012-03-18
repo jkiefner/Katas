@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Customers">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="AccountNumber" type="xs:int" minOccurs="0" />
+                <xs:element name="FirstName" type="xs:string" minOccurs="0" />
+                <xs:element name="LastName" type="xs:string" minOccurs="0" />
+                <xs:element name="CurrencyType" msdata:DataType="BankingCore.Accounts.CurrencyType, BankingCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" type="xs:anyType" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Customers>
+    <AccountNumber>111</AccountNumber>
+    <FirstName>John</FirstName>
+    <LastName>Doe</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>222</AccountNumber>
+    <FirstName>Jane</FirstName>
+    <LastName>Smith</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>333</AccountNumber>
+    <FirstName>Mark</FirstName>
+    <LastName>Smith</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>444</AccountNumber>
+    <FirstName>Deckard</FirstName>
+    <LastName>Caine</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>555</AccountNumber>
+    <FirstName>Larry</FirstName>
+    <LastName>Guy</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>666</AccountNumber>
+    <FirstName>Baal</FirstName>
+    <LastName>Primeevil</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+   <Customers>
+    <AccountNumber>777</AccountNumber>
+    <FirstName>John</FirstName>
+    <LastName>Shephard</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+  <Customers>
+    <AccountNumber>888</AccountNumber>
+    <FirstName>Jeff</FirstName>
+    <LastName>Jackson</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+  <Customers>
+    <AccountNumber>999</AccountNumber>
+    <FirstName>Peyton</FirstName>
+    <LastName>Manning</LastName>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
+</NewDataSet>

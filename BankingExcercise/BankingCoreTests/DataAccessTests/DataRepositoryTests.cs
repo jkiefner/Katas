@@ -14,14 +14,10 @@ namespace BankingCoreTests.DataAccessTests
         public void CanLoadDataXMLTest()
         {
             DataSet ds = new DataSet();
-            ds.Tables.Add("Customers");
-            ds.Tables["Customers"].Columns.Add("AccountNumber", typeof(int));
-            ds.Tables["Customers"].Columns.Add("FirstName", typeof(string));
-            ds.Tables["Customers"].Columns.Add("LastName", typeof(string));
-            ds.Tables["Customers"].Columns.Add("CurrencyType", typeof(BankingCore.Accounts.CurrencyType));
-            
+            ds.ReadXml("Customers.xml", XmlReadMode.ReadSchema);
+            Assert.That(ds.Tables["Customers"].Rows.Count, Is.GreaterThan(0));
+            Assert.That(ds.Tables["Customers"].Rows[0]["AccountNumber"], Is.EqualTo(111));
             Assert.That(ds, Is.Not.Null);
         }
-        
     }
 }
