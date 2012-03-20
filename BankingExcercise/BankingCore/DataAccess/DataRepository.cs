@@ -66,5 +66,21 @@ namespace BankingCore.DataAccess
             }
             return customerList;
         }
+        
+        public Customer GetCustomerByAccountId(int accountNumber)
+        {
+            return _customerList
+                .Where(x => x.AccountNumber == accountNumber).FirstOrDefault();
+           
+        }
+        public List<Customer> GetTopFiveBalanceCustomers()
+        {
+            return _customerList.OrderByDescending(x => x.Balance).Take(5).ToList();
+        }
+
+        public List<Customer> GetBottomFiveBalanceCustomers()
+        {
+            return _customerList.OrderBy(x => x.Balance).Take(5).ToList();
+        }
     }
 }

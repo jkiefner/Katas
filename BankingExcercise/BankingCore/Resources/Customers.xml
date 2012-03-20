@@ -82,4 +82,11 @@
     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
+  <Customers>
+    <AccountNumber>1000</AccountNumber>
+    <FirstName>Chris</FirstName>
+    <LastName>Cornell</LastName>
+    <Balance>0.00</Balance>
+    <CurrencyType>0</CurrencyType>
+  </Customers>
 </NewDataSet>

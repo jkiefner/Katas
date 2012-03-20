@@ -27,14 +27,41 @@ namespace BankingCoreTests.DataAccessTests
             }
         }
 
-      
         [Test]
         public void CanGetListOfCustomersTest()
         {
-            List<Customer> customerList =_dataRepo.CustomerList;
+            List<Customer> customerList = _dataRepo.CustomerList;
             Assert.That(customerList, Is.Not.Null);
             Assert.That(customerList.Count, Is.GreaterThan(0));
         }
+
+        [Test]
+        public void CanGetCustomerByAccountIdTest()
+        {
+            int accountNumber = 111;
+            Customer customer = _dataRepo.GetCustomerByAccountId(accountNumber);
+            Assert.That(customer.LastName, Is.EqualTo("Doe"));
+        }
+
+        [Test]
+        public void CanGetTopFiveHighestBalanceCustomersTest()
+        {
+            List<Customer> topFiveList = _dataRepo.GetTopFiveBalanceCustomers();
+            Assert.That(topFiveList.Count, Is.EqualTo(5));
+            Assert.That(topFiveList[0].Balance, Is.GreaterThan(
+                topFiveList[1].Balance));
+
+        }
+        [Test]
+        public void CanGetBottomFiveBalanceCustomersTest()
+        {
+            List<Customer> bottomFiveList =
+                _dataRepo.GetBottomFiveBalanceCustomers();
+            Assert.That(bottomFiveList[4].Balance, Is.LessThan(
+                _dataRepo.GetTopFiveBalanceCustomers()[4].Balance));
+
+        }
+
 
     }
 }
