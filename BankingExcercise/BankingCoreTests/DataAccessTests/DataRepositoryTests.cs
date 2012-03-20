@@ -4,28 +4,37 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.Data;
+using BankingCore.Users;
+using BankingCore.DataAccess;
 
 namespace BankingCoreTests.DataAccessTests
 {
     [TestFixture]
     public class DataRepositoryTests
     {
+
+        DataRepository _dataRepo;
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            _dataRepo = new DataRepository();
+        }
+
         [Test]
         public void CanLoadDataXMLTest()
         {
-            DataSet ds = new DataSet();
-            ds.ReadXml("Customers.xml", XmlReadMode.ReadSchema);
+            DataSet ds = _dataRepo.LoadDataSetFromXML();
             Assert.That(ds.Tables["Customers"].Rows.Count, Is.GreaterThan(0));
             Assert.That(ds.Tables["Customers"].Rows[0]["AccountNumber"], Is.EqualTo(111));
+        }
 
-            //Transaction log is not outlined in project
-            //ds.Tables.Add("Transactions");
-            //ds.Tables["Transactions"].Columns.Add("TransactionGuid", typeof(string));
-            //ds.Tables["Transactions"].Columns.Add("CustomerId", typeof(int));
-            //ds.Tables["Transactions"].Columns.Add("Date", typeof(DateTime));
-            //ds.Tables["Transactions"].Columns.Add("Amount", typeof(decimal));
-
-            Assert.That(ds, Is.Not.Null);
+        [Test]
+        public void CanGetListOfCustomersTest()
+        {
+            List<Customer> customerList = _dataRepo.GetListOfCustomers();
+            Assert.That(customerList, Is.Not.Null);
+            Assert.That(customerList.Count, Is.GreaterThan(0));
         }
 
     }

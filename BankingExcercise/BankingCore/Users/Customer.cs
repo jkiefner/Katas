@@ -9,6 +9,15 @@ namespace BankingCore.Users
     public class Customer
     {
 
+        public Customer()
+            : this(0M)
+        {}
+
+        public Customer(decimal initialBalance)
+        {
+            _balance = initialBalance;
+        }
+
         private CurrencyType _CurrencyType = CurrencyType.USDollar;
         private int _AccountNumber;
         private string _LastName;
@@ -83,7 +92,7 @@ namespace BankingCore.Users
             get
             {
                 return _balance * CalculateExchangeRate();
-            }            
+            }
         }
 
         public bool DebitBalance(decimal amountToDebit)
