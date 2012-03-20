@@ -18,21 +18,20 @@ namespace BankingCoreTests.DataAccessTests
         [TestFixtureSetUp]
         public void Setup()
         {
-            _dataRepo = new DataRepository();
+            _dataRepo = DataRepository.GetInstance;
+            decimal pointer = 1M;
+            foreach (var item in _dataRepo.CustomerList)
+            {
+                item.DebitBalance(pointer);
+                pointer += 5M;
+            }
         }
 
-        [Test]
-        public void CanLoadDataXMLTest()
-        {
-            DataSet ds = _dataRepo.LoadDataSetFromXML();
-            Assert.That(ds.Tables["Customers"].Rows.Count, Is.GreaterThan(0));
-            Assert.That(ds.Tables["Customers"].Rows[0]["AccountNumber"], Is.EqualTo(111));
-        }
-
+      
         [Test]
         public void CanGetListOfCustomersTest()
         {
-            List<Customer> customerList = _dataRepo.GetListOfCustomers();
+            List<Customer> customerList =_dataRepo.CustomerList;
             Assert.That(customerList, Is.Not.Null);
             Assert.That(customerList.Count, Is.GreaterThan(0));
         }
