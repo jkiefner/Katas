@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BankingExcercise
+namespace Bankingexercise
 {
-    public class BankingExcercise
+    public class Bankingexercise
     {
         static void Main(string[] args)
         {
