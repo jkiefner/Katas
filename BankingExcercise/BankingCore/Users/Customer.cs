@@ -22,6 +22,9 @@ namespace BankingCore.Users
         private int _AccountNumber;
         private string _LastName;
         private string _FirstName;
+
+        public List<Transaction> TransactionHistory { get; set; }
+        
         public string FirstName
         {
             get
@@ -110,6 +113,11 @@ namespace BankingCore.Users
             }
             else
                 return false;
+        }
+
+        public void AddTransaction(Transaction transAction)
+        {
+            TransactionHistory.Add(transAction);
         }
     }
 }

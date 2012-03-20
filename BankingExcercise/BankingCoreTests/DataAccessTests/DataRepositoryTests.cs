@@ -55,13 +55,12 @@ namespace BankingCoreTests.DataAccessTests
         [Test]
         public void CanGetBottomFiveBalanceCustomersTest()
         {
+            Console.WriteLine(Guid.NewGuid());
             List<Customer> bottomFiveList =
                 _dataRepo.GetBottomFiveBalanceCustomers();
             Assert.That(bottomFiveList[4].Balance, Is.LessThan(
                 _dataRepo.GetTopFiveBalanceCustomers()[4].Balance));
 
-        }
-
-
+        }  
     }
 }

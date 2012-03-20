@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using BankingCore.Users;
+using System.Xml.Linq;
+using BankingCore.Accounts;
 
 namespace BankingCore.DataAccess
 {
@@ -38,35 +40,38 @@ namespace BankingCore.DataAccess
 
         private DataRepository()
         {
-            _customerList = GetListOfCustomers();
+            _customerList = LoadDataSetFromXML();
         }
 
-        private DataSet LoadDataSetFromXML()
+        private List<Customer> LoadDataSetFromXML()
         {
-            DataSet returnData =
-                new DataSet();
-            returnData.ReadXml("Customers.xml", XmlReadMode.ReadSchema);
-            return returnData;
-        }
-
-        private List<Customer> GetListOfCustomers()
-        {
-            DataTable customerTable = LoadDataSetFromXML().Tables["Customers"];
-            List<Customer> customerList = new List<Customer>();
-            for (int i = 0; i < customerTable.Rows.Count; i++)
+            List<Customer> cList = new List<Customer>();
+            XDocument xmlData = XDocument.Load("Customers.xml");
+            cList = (from items in xmlData.Descendants("Customer")
+                     select new Customer() { 
+                     FirstName = items.Element("FirstName").Value.ToString(),
+                     LastName = items.Element("LastName").Value.ToString(),
+                     AccountNumber = (int)items.Element("AccountNumber"),
+                     CurrencyType = (Accounts.CurrencyType)((int)items.Element("CurrencyType"))                     
+                     }).ToList();
+            foreach (var customer in cList)
             {
-                customerList.Add(new Customer(
-                    (decimal)customerTable.Rows[i]["Balance"])
-                    {
-                        AccountNumber = (int)customerTable.Rows[i]["AccountNumber"],
-                        FirstName = (string)customerTable.Rows[i]["FirstName"],
-                        LastName = (string)customerTable.Rows[i]["LastName"],
-                        CurrencyType = (Accounts.CurrencyType)customerTable.Rows[i]["CurrencyType"]
-                    });
+                customer.TransactionHistory = (from trans in xmlData.Descendants("Transaction")
+                                               where (int)trans.Element("AccountNumber") == (int)customer.AccountNumber
+                                               select new Transaction()
+                                               {
+                                                   TransactionId = (Guid)trans.Element("TransactionGuid"),
+                                                   AccountNumber = (int)trans.Element("AccountNumber"),
+                                                   TransactionAmount = (decimal)trans.Element("Amount"),
+                                                   PriorBalance = (decimal)trans.Element("PriorBalance"),
+                                                   Balance = (decimal)trans.Element("Balance"),
+                                                   Description = trans.Element("Description").Value.ToString()
+                                               }).ToList();
             }
-            return customerList;
+
+            return cList;
         }
-        
+       
         public Customer GetCustomerByAccountId(int accountNumber)
         {
             return _customerList

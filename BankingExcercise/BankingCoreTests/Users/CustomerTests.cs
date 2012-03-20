@@ -42,7 +42,6 @@ namespace BankingCoreTests.Users
             bool successfullCredit =
             testCustomer.CreditBalance(amountToCredit);
             Assert.That(testCustomer.Balance, Is.EqualTo(5.00M));
-
         }
 
         [Test]
