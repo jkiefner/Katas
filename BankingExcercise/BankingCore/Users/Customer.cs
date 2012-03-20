@@ -61,12 +61,28 @@ namespace BankingCore.Users
             }
         }
 
+        private decimal CalculateExchangeRate()
+        {
+            switch (_CurrencyType)
+            {
+                case CurrencyType.USDollar:
+                    return 1M;
+                    break;
+                case CurrencyType.Euro:
+                    return 1.5M;
+                    break;
+                default:
+                    return 1M;
+                    break;
+            }
+        }
+
         private decimal _balance = 0.00M;
         public decimal Balance
         {
             get
             {
-                return _balance;
+                return _balance * CalculateExchangeRate();
             }            
         }
 

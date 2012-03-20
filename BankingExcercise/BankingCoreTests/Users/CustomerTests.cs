@@ -44,6 +44,7 @@ namespace BankingCoreTests.Users
             Assert.That(testCustomer.Balance, Is.EqualTo(5.00M));
 
         }
+
         [Test]
         public void CreditCustomerWithLowBalanceReturnsFalseTest()
         {
@@ -52,6 +53,16 @@ namespace BankingCoreTests.Users
             bool successfullCredit =
                 testCustomer.CreditBalance(5.00M);
             Assert.That(successfullCredit, Is.False);
+        }
+
+        [Test]
+        public void CurrencyAdjustmentFactorTest()
+        {
+            Customer testCustomer = new Customer();
+            testCustomer.DebitBalance(10.00M);
+            Assert.That(testCustomer.Balance, Is.EqualTo(10M));
+            testCustomer.CurrencyType = CurrencyType.Euro;
+            Assert.That(testCustomer.Balance, Is.EqualTo(15M));
         }
     }
 }
