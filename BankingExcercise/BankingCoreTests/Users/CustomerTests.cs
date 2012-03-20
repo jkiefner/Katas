@@ -22,5 +22,16 @@ namespace BankingCoreTests.Users
             newCustomer.AccountNumber = accountID;
             Assert.That(newCustomer, Is.Not.Null);
         }
+        [Test]
+        public void CanDebitCustomerBalanceTest()
+        {
+            Customer testCustomer = new Customer();
+            decimal currentBalance = testCustomer.Balance;
+            Assert.That(currentBalance, Is.EqualTo(0));
+            decimal amountToDebit = 5.00M;
+            testCustomer.DebitBalance(amountToDebit);
+            Assert.That(testCustomer.Balance, Is.EqualTo(amountToDebit));
+        }
+
     }
 }

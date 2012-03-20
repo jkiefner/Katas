@@ -10,6 +10,7 @@
                 <xs:element name="AccountNumber" type="xs:int" minOccurs="0" />
                 <xs:element name="FirstName" type="xs:string" minOccurs="0" />
                 <xs:element name="LastName" type="xs:string" minOccurs="0" />
+                <xs:element name="Balance" type="xs:decimal" minOccurs="0" />
                 <xs:element name="CurrencyType" msdata:DataType="BankingCore.Accounts.CurrencyType, BankingCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" type="xs:anyType" minOccurs="0" />
               </xs:sequence>
             </xs:complexType>
@@ -22,54 +23,63 @@
     <AccountNumber>111</AccountNumber>
     <FirstName>John</FirstName>
     <LastName>Doe</LastName>
+    <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>222</AccountNumber>
     <FirstName>Jane</FirstName>
     <LastName>Smith</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>333</AccountNumber>
     <FirstName>Mark</FirstName>
     <LastName>Smith</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>444</AccountNumber>
     <FirstName>Deckard</FirstName>
     <LastName>Caine</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>555</AccountNumber>
     <FirstName>Larry</FirstName>
     <LastName>Guy</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>666</AccountNumber>
     <FirstName>Baal</FirstName>
     <LastName>Primeevil</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
    <Customers>
     <AccountNumber>777</AccountNumber>
     <FirstName>John</FirstName>
     <LastName>Shephard</LastName>
+     <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
   <Customers>
     <AccountNumber>888</AccountNumber>
     <FirstName>Jeff</FirstName>
     <LastName>Jackson</LastName>
+    <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
   <Customers>
     <AccountNumber>999</AccountNumber>
     <FirstName>Peyton</FirstName>
     <LastName>Manning</LastName>
+    <Balance>0.00</Balance>
     <CurrencyType>0</CurrencyType>
   </Customers>
 </NewDataSet>

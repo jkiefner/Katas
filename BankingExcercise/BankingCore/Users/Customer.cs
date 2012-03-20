@@ -60,5 +60,18 @@ namespace BankingCore.Users
                 _CurrencyType = value;
             }
         }
+
+        private decimal _balance = 0.00M;
+        public decimal Balance
+        {
+            get
+            {
+                return _balance;
+            }            
+        }
+        public void DebitBalance(decimal amountToDebit)
+        {
+            _balance += amountToDebit;
+        }
     }
 }
