@@ -8,6 +8,34 @@ namespace BankingCore.Accounts
 {
     public class AccountRepository
     {
+        public bool TransferFunds(Customer originatingCustomer,
+            Customer destinationCustomer,
+            decimal amountOfTransfer)
+        {
+            if (originatingCustomer.Balance >= amountOfTransfer)
+            {
+                if (originatingCustomer.CreditBalance(amountOfTransfer))
+                {
+                    if (destinationCustomer.DebitBalance(amountOfTransfer))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        originatingCustomer.DebitBalance(amountOfTransfer);
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 }

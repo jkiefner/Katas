@@ -70,9 +70,10 @@ namespace BankingCore.Users
             }            
         }
 
-        public void DebitBalance(decimal amountToDebit)
+        public bool DebitBalance(decimal amountToDebit)
         {
             _balance += amountToDebit;
+            return true;
         }
 
         public bool CreditBalance(decimal amountToCredit)

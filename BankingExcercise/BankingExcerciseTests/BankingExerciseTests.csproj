@@ -50,7 +50,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankingExcercise\BankingExcercise.csproj">
+    <ProjectReference Include="..\BankingExcercise\BankingExercise.csproj">
       <Project>{908A2887-78ED-4579-9EF3-6779F6ED8E58}</Project>
       <Name>BankingExcercise</Name>
     </ProjectReference>
