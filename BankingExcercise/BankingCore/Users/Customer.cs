@@ -69,9 +69,21 @@ namespace BankingCore.Users
                 return _balance;
             }            
         }
+
         public void DebitBalance(decimal amountToDebit)
         {
             _balance += amountToDebit;
+        }
+
+        public bool CreditBalance(decimal amountToCredit)
+        {
+            if (_balance >= amountToCredit)
+            {
+                _balance -= amountToCredit;
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

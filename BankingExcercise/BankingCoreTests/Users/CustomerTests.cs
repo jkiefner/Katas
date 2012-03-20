@@ -33,5 +33,26 @@ namespace BankingCoreTests.Users
             Assert.That(testCustomer.Balance, Is.EqualTo(amountToDebit));
         }
 
+        [Test]
+        public void CanCreditCustomerBalanceTest()
+        {
+            Customer testCustomer = new Customer();
+            testCustomer.DebitBalance(10.00M);
+            decimal amountToCredit = 5.00M;
+            bool successfullCredit =
+            testCustomer.CreditBalance(amountToCredit);
+            Assert.That(testCustomer.Balance, Is.EqualTo(5.00M));
+
+        }
+        [Test]
+        public void CreditCustomerWithLowBalanceReturnsFalseTest()
+        {
+            Customer testCustomer = new Customer();
+            testCustomer.DebitBalance(1.00M);
+            bool successfullCredit =
+                testCustomer.CreditBalance(5.00M);
+            Assert.That(successfullCredit, Is.False);
+
+        }
     }
 }
