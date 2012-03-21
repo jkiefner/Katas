@@ -62,6 +62,26 @@ namespace BankingCoreTests.Users
             Assert.That(testCustomer.Balance, Is.EqualTo(10M));
             testCustomer.CurrencyType = CurrencyType.Euro;
             Assert.That(testCustomer.Balance, Is.EqualTo(15M));
+            testCustomer.CreditBalance(15M);
+            Assert.That(testCustomer.Balance, Is.EqualTo(0M));
+            testCustomer.DebitBalance(10M);
+            Assert.That(testCustomer.Balance, Is.EqualTo(10M));
+        }
+
+        [Test]
+        public void CanGetBalanceForCustomerWithTransactionHistoryTest()
+        {
+            BankingCore.DataAccess.DataRepository _dRepo =
+                BankingCore.DataAccess.DataRepository.GetInstance;
+            Customer testCustomer = _dRepo.GetCustomerByAccountId(111);
+            Assert.That(testCustomer.Balance, Is.EqualTo(100M));
+        }
+        [Test]
+        public void CanGetBalanceForCustomerWithoutTransactionHistoryTest()
+        {
+            Customer testCustomer = new Customer();
+            decimal balance = testCustomer.Balance;
+            Assert.That(balance, Is.EqualTo(0));
         }
     }
 }

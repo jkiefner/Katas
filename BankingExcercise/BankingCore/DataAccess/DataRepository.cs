@@ -54,6 +54,7 @@ namespace BankingCore.DataAccess
                      AccountNumber = (int)items.Element("AccountNumber"),
                      CurrencyType = (Accounts.CurrencyType)((int)items.Element("CurrencyType"))                     
                      }).ToList();
+
             foreach (var customer in cList)
             {
                 customer.TransactionHistory = (from trans in xmlData.Descendants("Transaction")

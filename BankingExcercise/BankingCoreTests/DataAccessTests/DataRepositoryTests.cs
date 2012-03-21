@@ -61,6 +61,6 @@ namespace BankingCoreTests.DataAccessTests
             Assert.That(bottomFiveList[4].Balance, Is.LessThan(
                 _dataRepo.GetTopFiveBalanceCustomers()[4].Balance));
 
-        }  
+        } 
     }
 }

@@ -9,22 +9,25 @@ namespace BankingCore.Users
     public class Customer
     {
 
-        public Customer()
-            : this(0M)
-        {}
-
-        public Customer(decimal initialBalance)
-        {
-            _balance = initialBalance;
-        }
+        #region "Properties"
 
         private CurrencyType _CurrencyType = CurrencyType.USDollar;
-        private int _AccountNumber;
-        private string _LastName;
-        private string _FirstName;
 
-        public List<Transaction> TransactionHistory { get; set; }
-        
+        private List<Transaction> _transactionHistory =
+            new List<Transaction>();
+        public List<Transaction> TransactionHistory
+        {
+            get
+            {
+                return _transactionHistory;
+            }
+            set
+            {
+                _transactionHistory = value;
+            }
+        }
+
+        private string _FirstName;
         public string FirstName
         {
             get
@@ -37,6 +40,7 @@ namespace BankingCore.Users
             }
         }
 
+        private string _LastName;
         public string LastName
         {
             get
@@ -49,6 +53,7 @@ namespace BankingCore.Users
             }
         }
 
+        private int _AccountNumber;
         public int AccountNumber
         {
             get
@@ -73,7 +78,19 @@ namespace BankingCore.Users
             }
         }
 
-        private decimal CalculateExchangeRate()
+        private decimal? _balance;
+        public decimal Balance
+        {
+            get
+            {
+                CheckForInitialBalance();
+                return (decimal)_balance * GetExchangeRateFactor();
+            }
+        }
+
+        #endregion
+
+        private decimal GetExchangeRateFactor()
         {
             switch (_CurrencyType)
             {
@@ -89,26 +106,60 @@ namespace BankingCore.Users
             }
         }
 
-        private decimal _balance = 0.00M;
-        public decimal Balance
+
+
+        private void CalculateInitialBalance()
         {
-            get
-            {
-                return _balance * CalculateExchangeRate();
-            }
+            _balance = (decimal)TransactionHistory
+                .OrderByDescending(x => x.Date)
+                .Select(y => y.Balance)
+                .FirstOrDefault();
         }
 
         public bool DebitBalance(decimal amountToDebit)
         {
-            _balance += amountToDebit;
+            CheckForInitialBalance();
+            decimal adjustedAmount = (amountToDebit / GetExchangeRateFactor());
+
+            TransactionHistory.Add(new Transaction
+            {
+                AccountNumber = _AccountNumber,
+                Date = DateTime.Now,
+                Balance = (decimal)_balance + adjustedAmount,
+                PriorBalance = (decimal)_balance,
+                TransactionAmount = amountToDebit,
+                TransactionId = Guid.NewGuid()
+            });
+
+            _balance += adjustedAmount;
             return true;
+        }
+
+        private void CheckForInitialBalance()
+        {
+            if (_balance == null)
+            {
+                CalculateInitialBalance();
+            }
         }
 
         public bool CreditBalance(decimal amountToCredit)
         {
-            if (_balance >= amountToCredit)
+            CheckForInitialBalance();
+            decimal adjustedAmount = (amountToCredit / GetExchangeRateFactor());
+
+            if (_balance >= adjustedAmount)
             {
-                _balance -= amountToCredit;
+                TransactionHistory.Add(new Transaction
+                {
+                    AccountNumber = _AccountNumber,
+                    Date = DateTime.Now,
+                    Balance = (decimal)_balance - adjustedAmount,
+                    PriorBalance = (decimal)_balance,
+                    TransactionAmount = adjustedAmount,
+                    TransactionId = Guid.NewGuid()
+                });
+                _balance -= adjustedAmount;
                 return true;
             }
             else
