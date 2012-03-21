@@ -3,69 +3,152 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BankingCore.DataAccess;
+using BankingCore.View;
 
 namespace Bankingexercise
 {
     public class Bankingexercise
     {
-        public static DataRepository _dataRepository;
+        private static DataRepository _dataRepository;
+        private static ViewRepository _viewRepo;
         static void Main(string[] args)
         {
             _dataRepository = DataRepository.GetInstance;
+            _viewRepo = new ViewRepository(_dataRepository);
+
             RunBankingOperation();
         }
 
         private static void RunBankingOperation()
         {
-            HandleStartUpScreen();
-            Console.ReadKey();
+            DisplayStartUpScreen();
         }
-        private static void HandleStartUpScreen()
+        private static void DisplayStartUpScreen()
         {
-            Console.WriteLine("Welcome to Super Bank Terminal\r\n");
+            Console.Clear();
+            Console.WriteLine("Welcome to Super Bank Terminal");
+            Console.WriteLine("(Please set your terminal's font to Lucida Console for Euro symbol)\r\n");
             Console.WriteLine("Please choose your customer type:\r\n");
-            Console.WriteLine("Bank Manager (A)");
-            Console.WriteLine("Customer (B)");
+            Console.WriteLine("Bank Manager\t(1)");
+            Console.WriteLine("Customer\t(2)");
+            Console.WriteLine("Exit\t\t(9)");
 
-            string keyInput = string.Empty;
+            bool intValueSelected = false; 
             int attemptCounter = 0;
+            int keySelection = 9;
 
             while (attemptCounter < 3)
             {
-                keyInput = Console.ReadKey(true)
-               .KeyChar.ToString().ToUpper();
-                if (keyInput != "A" && keyInput != "B")
+                intValueSelected = Int32.TryParse(
+                    Console.ReadKey(true).KeyChar.ToString()
+                    ,out keySelection);
+
+               if (!intValueSelected)
                 {
-                    Console.WriteLine("Please enter \"A\" or \"B\"");
+                    Console.WriteLine("Please enter a numeric value");
                     attemptCounter += 1;
                     continue;
                 }
                 else
                 {
-                    return;
+                    break;
                 }
             }
-            switch (keyInput)
+            switch (keySelection)
             {
-                case "A":
+                case 1:
                     DisplayManagersMainScreen();
                     break;
-                case "B":
+                case 2:
                     DisplayCustomerMainScreen();
                     break;
+                case 9:
+                    break;
                 default:
-                    HandleStartUpScreen();
+                    DisplayStartUpScreen();
                     break;
             }
 
         }
         private static void DisplayManagersMainScreen()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\r\nPlease Choose from the follwoing options:\r\n");
+            Console.WriteLine("List top 5 customers by balance (1)");
+            Console.WriteLine("List bottom 5 customers by balance (2)");
+            Console.WriteLine("View customer by account number (3)");
+            Console.WriteLine("View customer balance by date (4)");
+            Console.WriteLine("View all customers (5)");
+            Console.WriteLine("Exit to main menu (9)");
+
+            int keyInput;
+            Int32.TryParse(Console.ReadKey(true).KeyChar.ToString(),out keyInput);
+
+            if (keyInput != null)
+            {
+                DisplayManagerSubScreen(keyInput);
+            }
+
+        }
+        private static void DisplayManagerSubScreen(int keyInput)
+        {
+            switch (keyInput)
+            {
+                case 1:
+                    DisplayTopFiveByBalanceScreen();
+                    break;
+                case 2:
+                    DisplayBottomFiveByBalanceScreen();
+                    break;
+                case 3:
+                    ViewCustomerByAccountNumberDisplay();
+                    break;
+                case 4:
+                    ViewCustomerByBalanceAndDateDisplay();
+                    break;
+                case 5:
+                    ViewAllCustomersDisplay();
+                    break;
+                case 9:
+                    DisplayStartUpScreen();
+                    break;
+                default:
+                    DisplayManagersMainScreen();
+                    break;
+            }
         }
         private static void DisplayCustomerMainScreen()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("display customers");
+            Console.ReadKey();
+        }
+        private static void DisplayBottomFiveByBalanceScreen()
+        {
+            Console.WriteLine(_viewRepo.GetBottomFiveCustomersByBalanceView());
+            Console.WriteLine("Enter any key...");
+            Console.ReadKey();
+            DisplayManagersMainScreen();
+        }
+        private static void ViewCustomerByAccountNumberDisplay()
+        {
+            Console.WriteLine("ViewCustomerByAccountNumberDisplay");
+            Console.ReadKey();
+        }
+        private static void ViewCustomerByBalanceAndDateDisplay()
+        {
+            Console.WriteLine("ViewCustomerByBalanceAndDateDisplay");
+            Console.ReadKey();
+        }
+        private static void ViewAllCustomersDisplay()
+        {
+            Console.WriteLine("ViewAllCustomersDisplay");
+            Console.ReadKey();
+        }
+        private static void DisplayTopFiveByBalanceScreen()
+        {
+            Console.WriteLine(_viewRepo.GetTopFiveCustomersByBalanceView());
+            Console.WriteLine("Enter any key...");
+            Console.ReadKey();
+            DisplayManagersMainScreen();
         }
     }
 }

@@ -5,7 +5,7 @@
       <AccountNumber>111</AccountNumber>
       <FirstName>John</FirstName>
       <LastName>Doe</LastName>
-      <CurrencyType>0</CurrencyType>
+      <CurrencyType>1</CurrencyType>
     </Customer>
     <Customer>
       <AccountNumber>222</AccountNumber>
