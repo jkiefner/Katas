@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AA0877D7-0FEE-4A85-9C24-DD71103B80DD}</ProjectGuid>
+    <ProjectGuid>{05B5C986-BE18-410E-8803-5F173561541A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankingCoreTests</RootNamespace>
-    <AssemblyName>BankingCoreTests</AssemblyName>
+    <RootNamespace>BankingCore</RootNamespace>
+    <AssemblyName>BankingCore</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,24 +40,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\AccountRepositoryTests.cs" />
-    <Compile Include="DataAccessTests\DataRepositoryTests.cs" />
+    <Compile Include="Accounts\AccountRepository.cs" />
+    <Compile Include="Accounts\CurrencyType.cs" />
+    <Compile Include="Accounts\Transaction.cs" />
+    <Compile Include="DataAccess\DataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Users\CustomerTests.cs" />
+    <Compile Include="Users\Customer.cs" />
+    <Compile Include="View\ViewRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Content Include="Resources\Customers.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankingCore\BankingCore.csproj">
-      <Project>{05B5C986-BE18-410E-8803-5F173561541A}</Project>
-      <Name>BankingCore</Name>
-    </ProjectReference>
+    <None Include="Resources\Developer Interview Exercise.pdf" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)Resources\*.xml $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(SolutionDir)BankingCoreTests\Resources"
+copy "$(ProjectDir)Resources\*.xml" "$(SolutionDir)BankingCoreTests\Resources"
+copy "$(ProjectDir)Resources\*.xml" "$(SolutionDir)BankingExercise\$(OutDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

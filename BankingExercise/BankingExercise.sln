@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingExercise", "BankingExcercise\BankingExercise.csproj", "{908A2887-78ED-4579-9EF3-6779F6ED8E58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingExercise", "BankingExercise\BankingExercise.csproj", "{908A2887-78ED-4579-9EF3-6779F6ED8E58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingCore", "BankingCore\BankingCore.csproj", "{05B5C986-BE18-410E-8803-5F173561541A}"
 EndProject
@@ -9,7 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingCoreTests", "Banking
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Projects", "Test Projects", "{76725DF6-1506-47D9-A32A-EA487A7DBD02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingExerciseTests", "BankingExcerciseTests\BankingExerciseTests.csproj", "{54D82BEB-8D9A-4BFE-A685-BE651833C855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingExerciseTests", "BankingExerciseTests\BankingExerciseTests.csproj", "{54D82BEB-8D9A-4BFE-A685-BE651833C855}"
+	ProjectSection(ProjectDependencies) = postProject
+		{05B5C986-BE18-410E-8803-5F173561541A} = {05B5C986-BE18-410E-8803-5F173561541A}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library Projects", "Library Projects", "{BD03BC51-03A0-4E31-AC4E-A53E82654F6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Projects", "Application Projects", "{B5EB8934-81A7-455F-8D2E-BB04A392947C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +73,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{908A2887-78ED-4579-9EF3-6779F6ED8E58} = {B5EB8934-81A7-455F-8D2E-BB04A392947C}
+		{05B5C986-BE18-410E-8803-5F173561541A} = {BD03BC51-03A0-4E31-AC4E-A53E82654F6F}
 		{AA0877D7-0FEE-4A85-9C24-DD71103B80DD} = {76725DF6-1506-47D9-A32A-EA487A7DBD02}
 		{54D82BEB-8D9A-4BFE-A685-BE651833C855} = {76725DF6-1506-47D9-A32A-EA487A7DBD02}
 	EndGlobalSection

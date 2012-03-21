@@ -24,9 +24,9 @@ namespace BankingCoreTests.DataAccessTests
             {
                 item.DebitBalance(pointer);
                 pointer += 5M;
-            }
         }
 
+            }
         [Test]
         public void CanGetListOfCustomersTest()
         {
