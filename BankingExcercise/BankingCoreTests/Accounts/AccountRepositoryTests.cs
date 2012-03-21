@@ -39,32 +39,5 @@ namespace BankingCoreTests.Accounts
             Assert.That(destinationCustomer.Balance, Is.EqualTo(10.00));
             Assert.That(originatingCustomer.Balance, Is.EqualTo(90.00));
         }
-        [Test]
-        public void CanTransferFundsCorrectlyIfDifferentCurrenciesTest()
-        {
-            Customer originatingCustomer = new Customer
-            {
-                AccountNumber = 111,
-                FirstName = "John",
-                LastName = "Doe"
-            };
-            Customer destinationCustomer = new Customer
-            {
-                AccountNumber = 222,
-                FirstName = "Moe",
-                LastName = "Monee"
-            };
-            originatingCustomer.DebitBalance(100M);
-            Assert.That(originatingCustomer.Balance, Is.EqualTo(100M));
-            AccountRepository.TransferFunds(originatingCustomer
-                , destinationCustomer, 50M);
-            Assert.That(originatingCustomer.Balance
-                , Is.EqualTo(destinationCustomer.Balance));
-            originatingCustomer.CurrencyType = CurrencyType.Euro;
-            Assert.That(originatingCustomer._balance, Is.EqualTo(destinationCustomer.Balance));
-            AccountRepository.TransferFunds(originatingCustomer
-                , destinationCustomer, 25M);
-            Assert.That(originatingCustomer._balance, Is.EqualTo(25M));
-        }
     }
 }

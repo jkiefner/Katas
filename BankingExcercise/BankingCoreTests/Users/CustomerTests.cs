@@ -53,11 +53,8 @@ namespace BankingCoreTests.Users
             testCustomer.CurrencyType = CurrencyType.Euro;
             Assert.That(testCustomer.Balance, Is.EqualTo(5M).Within(0.02));
             testCustomer.CreditBalance(15M);
-            Assert.That(testCustomer.Balance, Is.EqualTo(-10M));
-            testCustomer.DebitBalance(20M);
-            Assert.That(testCustomer.Balance, Is.EqualTo(10M));
             testCustomer.CurrencyType = CurrencyType.USDollar;
-            Assert.That(testCustomer.Balance, Is.EqualTo(20M));
+            Assert.That(testCustomer.Balance, Is.EqualTo(-5M));
         }
 
         [Test]

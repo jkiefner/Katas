@@ -12,23 +12,16 @@ namespace BankingCore.Accounts
             Customer destinationCustomer,
             decimal amountOfTransfer)
         {
-            if (originatingCustomer._balance >= 
-                (amountOfTransfer / originatingCustomer.GetExchangeRateFactor()))
+            if (originatingCustomer.CreditBalance(amountOfTransfer))
             {
-                if (originatingCustomer.CreditBalance(amountOfTransfer))
+                if (destinationCustomer
+                    .DebitBalance(amountOfTransfer))
                 {
-                    if (destinationCustomer.DebitBalance(amountOfTransfer))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        originatingCustomer.DebitBalance(amountOfTransfer);
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
+                    originatingCustomer.DebitBalance(amountOfTransfer);
                     return false;
                 }
             }
@@ -37,6 +30,6 @@ namespace BankingCore.Accounts
                 return false;
             }
         }
-
     }
+
 }

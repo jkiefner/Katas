@@ -89,7 +89,7 @@ namespace BankingCore.Users
         }
 
         #endregion
-
+              
         public decimal GetExchangeRateFactor()
         {
             switch (_CurrencyType)
@@ -117,19 +117,18 @@ namespace BankingCore.Users
         public bool DebitBalance(decimal amountToDebit)
         {
             CheckForInitialBalance();
-            decimal adjustedAmount = (amountToDebit / GetExchangeRateFactor());
 
             TransactionHistory.Add(new Transaction
             {
                 AccountNumber = _AccountNumber,
                 Date = DateTime.Now,
-                Balance = (decimal)_balance + adjustedAmount,
+                Balance = (decimal)_balance + amountToDebit,
                 PriorBalance = (decimal)_balance,
                 TransactionAmount = amountToDebit,
                 TransactionId = Guid.NewGuid()
             });
 
-            _balance += adjustedAmount;
+            _balance += amountToDebit;
             return true;
         }
 
@@ -144,18 +143,17 @@ namespace BankingCore.Users
         public bool CreditBalance(decimal amountToCredit)
         {
             CheckForInitialBalance();
-            decimal adjustedAmount = (amountToCredit / GetExchangeRateFactor());
 
                 TransactionHistory.Add(new Transaction
                 {
                     AccountNumber = _AccountNumber,
                     Date = DateTime.Now,
-                    Balance = (decimal)_balance - adjustedAmount,
+                    Balance = (decimal)_balance - amountToCredit,
                     PriorBalance = (decimal)_balance,
-                    TransactionAmount = adjustedAmount,
+                    TransactionAmount = amountToCredit,
                     TransactionId = Guid.NewGuid()
                 });
-                _balance -= adjustedAmount;
+                _balance -= amountToCredit;
                 return true;
         }
 
