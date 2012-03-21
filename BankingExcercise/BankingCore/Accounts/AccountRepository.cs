@@ -8,11 +8,12 @@ namespace BankingCore.Accounts
 {
     public class AccountRepository
     {
-        public bool TransferFunds(Customer originatingCustomer,
+        public static bool TransferFunds(Customer originatingCustomer,
             Customer destinationCustomer,
             decimal amountOfTransfer)
         {
-            if (originatingCustomer.Balance >= amountOfTransfer)
+            if (originatingCustomer._balance >= 
+                (amountOfTransfer / originatingCustomer.GetExchangeRateFactor()))
             {
                 if (originatingCustomer.CreditBalance(amountOfTransfer))
                 {

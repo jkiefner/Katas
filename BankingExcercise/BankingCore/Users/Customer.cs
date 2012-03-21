@@ -78,7 +78,7 @@ namespace BankingCore.Users
             }
         }
 
-        private decimal? _balance;
+        public decimal? _balance { get; private set; }
         public decimal Balance
         {
             get
@@ -90,7 +90,7 @@ namespace BankingCore.Users
 
         #endregion
 
-        private decimal GetExchangeRateFactor()
+        public decimal GetExchangeRateFactor()
         {
             switch (_CurrencyType)
             {
@@ -98,15 +98,13 @@ namespace BankingCore.Users
                     return 1M;
                     break;
                 case CurrencyType.Euro:
-                    return 1.5M;
+                    return 0.5M;
                     break;
                 default:
                     return 1M;
                     break;
             }
         }
-
-
 
         private void CalculateInitialBalance()
         {
@@ -148,8 +146,6 @@ namespace BankingCore.Users
             CheckForInitialBalance();
             decimal adjustedAmount = (amountToCredit / GetExchangeRateFactor());
 
-            if (_balance >= adjustedAmount)
-            {
                 TransactionHistory.Add(new Transaction
                 {
                     AccountNumber = _AccountNumber,
@@ -161,9 +157,6 @@ namespace BankingCore.Users
                 });
                 _balance -= adjustedAmount;
                 return true;
-            }
-            else
-                return false;
         }
 
         public void AddTransaction(Transaction transAction)

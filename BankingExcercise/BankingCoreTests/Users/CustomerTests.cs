@@ -45,27 +45,19 @@ namespace BankingCoreTests.Users
         }
 
         [Test]
-        public void CreditCustomerWithLowBalanceReturnsFalseTest()
-        {
-            Customer testCustomer = new Customer();
-            testCustomer.DebitBalance(1.00M);
-            bool successfullCredit =
-                testCustomer.CreditBalance(5.00M);
-            Assert.That(successfullCredit, Is.False);
-        }
-
-        [Test]
         public void CurrencyAdjustmentFactorTest()
         {
             Customer testCustomer = new Customer();
             testCustomer.DebitBalance(10.00M);
             Assert.That(testCustomer.Balance, Is.EqualTo(10M));
             testCustomer.CurrencyType = CurrencyType.Euro;
-            Assert.That(testCustomer.Balance, Is.EqualTo(15M));
+            Assert.That(testCustomer.Balance, Is.EqualTo(5M).Within(0.02));
             testCustomer.CreditBalance(15M);
-            Assert.That(testCustomer.Balance, Is.EqualTo(0M));
-            testCustomer.DebitBalance(10M);
+            Assert.That(testCustomer.Balance, Is.EqualTo(-10M));
+            testCustomer.DebitBalance(20M);
             Assert.That(testCustomer.Balance, Is.EqualTo(10M));
+            testCustomer.CurrencyType = CurrencyType.USDollar;
+            Assert.That(testCustomer.Balance, Is.EqualTo(20M));
         }
 
         [Test]
