@@ -161,5 +161,10 @@ namespace BankingCore.Users
         {
             TransactionHistory.Add(transAction);
         }
+
+        public void UpdateBalance(decimal newBalance)
+        {
+            _balance = newBalance;
+        }
     }
 }

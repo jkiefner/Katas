@@ -62,5 +62,47 @@ namespace BankingCoreTests.DataAccessTests
                 _dataRepo.GetTopFiveBalanceCustomers()[4].Balance));
 
         } 
+        [Test]
+        public void CanGetBalanceForCustomerByAccountIdAndDateTest()
+        {
+            
+            Customer testCustomer = new Customer() { 
+                AccountNumber = 9999};
+            testCustomer.UpdateBalance(300M);
+            Assert.That(testCustomer.Balance, Is.EqualTo(300M));
+
+            DataRepository _dRepo = DataRepository.GetInstance;
+            int listCount = _dRepo.CustomerList.Count;
+            _dRepo.CustomerList.Add(testCustomer);
+
+            Customer aCustomer = _dRepo.GetCustomerByAccountAndDate(9999,
+                 new DateTime(2012, 3, 21));
+           
+            Assert.That(aCustomer.Balance, Is.EqualTo(0M));
+            
+            _dRepo.CustomerList[listCount].AddTransaction(
+                new BankingCore.Accounts.Transaction() {
+                AccountNumber = 9999,
+                Balance = 100M,
+                Date = new DateTime(2012,2,2),
+                TransactionAmount = 100M,
+                PriorBalance = 0M,
+                TransactionId = Guid.NewGuid()
+                });
+            aCustomer = _dRepo.GetCustomerByAccountAndDate(9999,
+               new DateTime(2012,3,21));
+            
+            Assert.That(aCustomer.Balance, Is.EqualTo(100M));
+            
+            _dRepo.CustomerList[listCount].DebitBalance(100M);
+            _dRepo.CustomerList[listCount].DebitBalance(300M);
+            Assert.That(aCustomer.Balance, Is.EqualTo(500M));
+
+            aCustomer = _dRepo.GetCustomerByAccountAndDate(9999
+                , new DateTime(2012, 3, 10));
+
+            Assert.That(aCustomer.Balance, Is.EqualTo(100M));
+
+        }
     }
 }

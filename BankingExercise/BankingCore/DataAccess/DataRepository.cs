@@ -88,5 +88,18 @@ namespace BankingCore.DataAccess
         {
             return _customerList.OrderBy(x => x.Balance).Take(5).ToList();
         }
+
+        public Customer GetCustomerByAccountAndDate(int accountNumber
+            ,DateTime dateOfInterest)
+        {
+            Customer customerOfInterest = _customerList.Where(
+                x => x.AccountNumber == accountNumber).FirstOrDefault();
+            decimal bal = (decimal)((customerOfInterest.TransactionHistory).OrderByDescending(
+                x => x.Date)).Where(y => y.Date <= dateOfInterest)
+                .Select(i => i.Balance).FirstOrDefault();
+
+            customerOfInterest.UpdateBalance(bal);
+            return customerOfInterest;                
+        }
     }
 }

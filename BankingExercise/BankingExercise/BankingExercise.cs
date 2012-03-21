@@ -33,7 +33,7 @@ namespace Bankingexercise
             Console.WriteLine("Customer\t(2)");
             Console.WriteLine("Exit\t\t(9)");
 
-            bool intValueSelected = false; 
+            bool intValueSelected = false;
             int attemptCounter = 0;
             int keySelection = 9;
 
@@ -41,9 +41,9 @@ namespace Bankingexercise
             {
                 intValueSelected = Int32.TryParse(
                     Console.ReadKey(true).KeyChar.ToString()
-                    ,out keySelection);
+                    , out keySelection);
 
-               if (!intValueSelected)
+                if (!intValueSelected)
                 {
                     Console.WriteLine("Please enter a numeric value");
                     attemptCounter += 1;
@@ -81,9 +81,10 @@ namespace Bankingexercise
             Console.WriteLine("Exit to main menu (9)");
 
             int keyInput;
-            Int32.TryParse(Console.ReadKey(true).KeyChar.ToString(),out keyInput);
+            bool parseSuccessful =
+            Int32.TryParse(Console.ReadKey(true).KeyChar.ToString(), out keyInput);
 
-            if (keyInput != null)
+            if (parseSuccessful)
             {
                 DisplayManagerSubScreen(keyInput);
             }
@@ -128,15 +129,73 @@ namespace Bankingexercise
             Console.ReadKey();
             DisplayManagersMainScreen();
         }
+
         private static void ViewCustomerByAccountNumberDisplay()
         {
-            Console.WriteLine("ViewCustomerByAccountNumberDisplay");
-            Console.ReadKey();
+            Console.WriteLine("Please Enter Customer Account Number:");
+            bool intValueSelected = false;
+            int keySelection = 9;
+
+            intValueSelected = Int32.TryParse(
+                Console.ReadLine()
+                , out keySelection);
+
+            while (!intValueSelected)
+            {
+                Console.WriteLine("Please enter a numeric value");
+                continue;
+            }
+            if (keySelection == 9)
+            {
+                DisplayManagersMainScreen();
+            }
+            else
+            {
+                Console.WriteLine(_viewRepo
+                    .GetCustomerViewByAccountNumberView(keySelection));
+                Console.WriteLine("Please press any key...");
+                Console.ReadKey();
+                DisplayManagersMainScreen();
+            }
         }
+
         private static void ViewCustomerByBalanceAndDateDisplay()
         {
-            Console.WriteLine("ViewCustomerByBalanceAndDateDisplay");
-            Console.ReadKey();
+            Console.WriteLine("Please Enter Customer Account Number:");
+            bool intValueSelected = false;
+            int keySelection = 9;
+
+            intValueSelected = Int32.TryParse(
+                Console.ReadLine()
+                , out keySelection);
+
+            while (!intValueSelected)
+            {
+                Console.WriteLine("Please enter a numeric value");
+                continue;
+            }
+            if (keySelection == 9)
+            {
+                DisplayManagersMainScreen();
+            }
+            else
+            {
+                Console.WriteLine("Please enter a date in this format mm-dd-yyyy ");
+                bool successfullDateInput = false;
+                DateTime dateOfInterest;
+                successfullDateInput = DateTime.TryParse(
+                    Console.ReadLine(), out dateOfInterest);
+                while (!successfullDateInput)
+                {
+                    Console.WriteLine("Please enter a date in this format mm-dd-yyyy ");
+                    continue;
+                }
+                Console.WriteLine(_viewRepo
+                    .GetCustomerViewByAccountNumberView(keySelection));
+                Console.WriteLine("Please press any key...");
+                Console.ReadKey();
+                DisplayManagersMainScreen();
+            }
         }
         private static void ViewAllCustomersDisplay()
         {
