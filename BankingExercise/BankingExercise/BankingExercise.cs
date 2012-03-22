@@ -12,6 +12,7 @@ namespace Bankingexercise
 		private static DataRepository _dataRepository;
 		private static ViewRepository _viewRepo;
 		private static int _customerAccountNumber = 0;
+		private static int _transferAccountNumber = 0;
 
 		static void Main(string[] args)
 		{
@@ -146,9 +147,10 @@ namespace Bankingexercise
 			switch (keyInput)
 			{
 				case 1:
-					WithdrawCustomerMoneyDisplay();
+					WithdrawOrDepositCustomerFunds(true);
 					break;
 				case 2:
+					WithdrawOrDepositCustomerFunds(false);
 					break;
 				case 3:
 					break;
@@ -163,9 +165,14 @@ namespace Bankingexercise
 			}
 		}
 
-		private static void WithdrawCustomerMoneyDisplay()
+		private static void WithdrawOrDepositCustomerFunds(bool withDrawingFunds)
 		{
-			Console.WriteLine("Please enter amount to withdraw:");
+			string actionString = "deposit";
+			if (withDrawingFunds)
+			{
+				actionString = "withdraw";
+			}
+			Console.WriteLine(string.Format("Please enter amount to {0}:",actionString));
 			decimal keyInput;
 			bool parseSuccessful =
 			decimal.TryParse(Console.ReadLine().ToString(), out keyInput);
@@ -186,18 +193,35 @@ namespace Bankingexercise
 			if (keyInput == 0M)
 			{
 				Console.WriteLine("Amount greater than 0 please.");
-				WithdrawCustomerMoneyDisplay();
+				WithdrawOrDepositCustomerFunds(withDrawingFunds);
 			}
-			if (_viewRepo.WithDrawMoneyFromAccountView(_customerAccountNumber, keyInput))
+			if (withDrawingFunds)
 			{
-				Console.WriteLine(string.Format("{0} Successfully deposited.", keyInput));
-				DisplayCustomerMainScreen(true);
+				if (_viewRepo.WithDrawMoneyFromAccountView(_customerAccountNumber, keyInput))
+				{
+					Console.WriteLine(string.Format("{0:C} Successfully withdrawn.", keyInput));
+					DisplayCustomerMainScreen(true);
+				}
+				else
+				{
+					Console.WriteLine("There was a problem withdrawing from your account.\r\nPlease check you're balance");
+					DisplayCustomerMainScreen(true);
+				}
 			}
 			else
 			{
-				Console.WriteLine("There was a problem withdrawing from you're account.\r\nPlease check you're balance");
-				DisplayCustomerMainScreen(true);
+				if (_viewRepo.DepostMoneyIntoAccountView(_customerAccountNumber, keyInput))
+				{
+					Console.WriteLine(string.Format("{0:C} Successfully deposited.", keyInput));
+					DisplayCustomerMainScreen(true);
+				}
+				else
+				{
+					Console.WriteLine("There was a problem depositing into your account.\r\nPlease check you're balance");
+					DisplayCustomerMainScreen(true);
+				}
 			}
+			
 		}
 
 		private static void DisplayBottomFiveByBalanceScreen()

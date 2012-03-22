@@ -103,6 +103,12 @@ namespace BankingCore.View
             return outString.ToString();
         }
 
+		public bool DepostMoneyIntoAccountView(int accountNumber,decimal amountToDeposit)
+		{
+			Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
+			return thisCustomer.DepositMoney(amountToDeposit);
+		}
+
 		public bool WithDrawMoneyFromAccountView(int accountNumber,decimal amountToWithdraw)
 		{
 			Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
@@ -133,5 +139,16 @@ namespace BankingCore.View
             }
             return outString.ToString();
         }
+
+		public bool CheckForGoodAccount(int accountNumber)
+		{
+			Customer customerToLookup = _dataRepo.GetCustomerByAccountId(accountNumber);
+			if (customerToLookup != null)
+			{
+				return true;
+			}
+			else
+				return false;
+		}
     }
 }
