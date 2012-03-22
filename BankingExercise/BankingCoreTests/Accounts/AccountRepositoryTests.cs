@@ -28,7 +28,7 @@ namespace BankingCoreTests.Accounts
                 LastName = "Monee"
             };
 
-            originatingCustomer.DebitBalance(100.00M);
+            originatingCustomer.DepositMoney(100.00M);
             Assert.That(originatingCustomer.Balance, Is.EqualTo(100.00M));
             decimal amountOfTransfer = 10.00M;
             bool transferSuccsessfull =

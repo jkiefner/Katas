@@ -29,7 +29,7 @@ namespace BankingCoreTests.Users
             decimal currentBalance = testCustomer.Balance;
             Assert.That(currentBalance, Is.EqualTo(0));
             decimal amountToDebit = 5.00M;
-            testCustomer.DebitBalance(amountToDebit);
+            testCustomer.DepositMoney(amountToDebit);
             Assert.That(testCustomer.Balance, Is.EqualTo(amountToDebit));
         }
 
@@ -37,22 +37,30 @@ namespace BankingCoreTests.Users
         public void CanCreditCustomerBalanceTest()
         {
             Customer testCustomer = new Customer();
-            testCustomer.DebitBalance(10.00M);
+            testCustomer.DepositMoney(10.00M);
             decimal amountToCredit = 5.00M;
             bool successfullCredit =
-            testCustomer.CreditBalance(amountToCredit);
+            testCustomer.WithdrawMoney(amountToCredit);
             Assert.That(testCustomer.Balance, Is.EqualTo(5.00M));
         }
+
+		[Test]
+		public void CannotWithdrawMoneyFromAccountWithZeroBalanceTest()
+		{
+			Customer testCustomer = new Customer();
+			bool result = testCustomer.WithdrawMoney(5M);
+			Assert.That(result, Is.False);
+		}
 
         [Test]
         public void CurrencyAdjustmentFactorTest()
         {
             Customer testCustomer = new Customer();
-            testCustomer.DebitBalance(10.00M);
+            testCustomer.DepositMoney(10.00M);
             Assert.That(testCustomer.Balance, Is.EqualTo(10M));
             testCustomer.CurrencyType = CurrencyType.Euro;
             Assert.That(testCustomer.Balance, Is.EqualTo(5M).Within(0.02));
-            testCustomer.CreditBalance(15M);
+            testCustomer.WithdrawMoney(15M);
             testCustomer.CurrencyType = CurrencyType.USDollar;
             Assert.That(testCustomer.Balance, Is.EqualTo(-5M));
         }

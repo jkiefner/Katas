@@ -23,7 +23,7 @@ namespace BankingCore.View
             StringBuilder outString = new StringBuilder();
             outString.AppendLine("\r\nTop Five Customers By Balance");
             outString.AppendLine("Account #\tName\t\tBalance");
-            return FormatOutGrid(topFiveList, outString);
+            return FormatSingleAccountGrid(topFiveList, outString);
         }
 
         public string GetBottomFiveCustomersByBalanceView()
@@ -33,7 +33,7 @@ namespace BankingCore.View
             StringBuilder outString = new StringBuilder();
             outString.AppendLine("\r\nBottom Five Customers By Balance");
             outString.AppendLine("Account #\tName\t\tBalance");
-            return FormatOutGrid(bottomFiveList, outString);
+            return FormatSingleAccountGrid(bottomFiveList, outString);
         }
 
         public string GetAllCustomersView()
@@ -41,7 +41,7 @@ namespace BankingCore.View
             StringBuilder outString = new StringBuilder();
             outString.AppendLine("\r\nAll Customers ");
             outString.AppendLine("Account #\tName\t\tBalance");
-            return FormatOutGrid(_dataRepo.CustomerList, outString);
+            return FormatSingleAccountGrid(_dataRepo.CustomerList, outString);
         }
 
         public string GetCustomerViewByAccountAndDate(int accountNumber
@@ -103,7 +103,13 @@ namespace BankingCore.View
             return outString.ToString();
         }
 
-        private string FormatOutGrid(List<Customer> customerList
+		public bool WithDrawMoneyFromAccountView(int accountNumber,decimal amountToWithdraw)
+		{
+			Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
+			return thisCustomer.WithdrawMoney(amountToWithdraw);
+		}
+
+        private string FormatSingleAccountGrid(List<Customer> customerList
             , StringBuilder outputString)
         {
             StringBuilder outString = new StringBuilder();

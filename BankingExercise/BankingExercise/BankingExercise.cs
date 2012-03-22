@@ -63,7 +63,7 @@ namespace Bankingexercise
 					DisplayManagersMainScreen();
 					break;
 				case 2:
-					DisplayCustomerMainScreen();
+					DisplayCustomerMainScreen(false);
 					break;
 				case 9:
 					break;
@@ -104,7 +104,7 @@ namespace Bankingexercise
 					DisplayBottomFiveByBalanceScreen();
 					break;
 				case 3:
-					ViewCustomerByAccountNumberDisplay(MenuType.BankManager);
+					ViewCustomerByAccountNumberDisplay(MenuType.BankManager, false);
 					break;
 				case 4:
 					ViewCustomerByBalanceAndDateDisplay();
@@ -121,9 +121,9 @@ namespace Bankingexercise
 			}
 		}
 
-		private static void DisplayCustomerMainScreen()
+		private static void DisplayCustomerMainScreen(bool isReload)
 		{
-			ViewCustomerByAccountNumberDisplay(MenuType.Customer);
+			ViewCustomerByAccountNumberDisplay(MenuType.Customer, isReload);
 
 			Console.WriteLine("\r\nPlease Choose from the follwoing options:\r\n");
 			Console.WriteLine("Withdraw Money from your account\t(1)");
@@ -146,6 +146,7 @@ namespace Bankingexercise
 			switch (keyInput)
 			{
 				case 1:
+					WithdrawCustomerMoneyDisplay();
 					break;
 				case 2:
 					break;
@@ -162,6 +163,43 @@ namespace Bankingexercise
 			}
 		}
 
+		private static void WithdrawCustomerMoneyDisplay()
+		{
+			Console.WriteLine("Please enter amount to withdraw:");
+			decimal keyInput;
+			bool parseSuccessful =
+			decimal.TryParse(Console.ReadLine().ToString(), out keyInput);
+
+			while (!parseSuccessful)
+			{
+				Console.WriteLine("Please enter a numeric value greater than 0 or (x) to exit:");
+				if (Console.ReadLine().ToString() == "x")
+				{
+					DisplayCustomerMainScreen(true);
+				}
+				else
+				{
+					decimal.TryParse(Console.ReadLine().ToString(), out keyInput);
+					continue;
+				}
+			}
+			if (keyInput == 0M)
+			{
+				Console.WriteLine("Amount greater than 0 please.");
+				WithdrawCustomerMoneyDisplay();
+			}
+			if (_viewRepo.WithDrawMoneyFromAccountView(_customerAccountNumber, keyInput))
+			{
+				Console.WriteLine(string.Format("{0} Successfully deposited.", keyInput));
+				DisplayCustomerMainScreen(true);
+			}
+			else
+			{
+				Console.WriteLine("There was a problem withdrawing from you're account.\r\nPlease check you're balance");
+				DisplayCustomerMainScreen(true);
+			}
+		}
+
 		private static void DisplayBottomFiveByBalanceScreen()
 		{
 			Console.WriteLine(_viewRepo.GetBottomFiveCustomersByBalanceView());
@@ -170,63 +208,72 @@ namespace Bankingexercise
 			DisplayManagersMainScreen();
 		}
 
-		private static void ViewCustomerByAccountNumberDisplay(MenuType customerType)
+		private static void ViewCustomerByAccountNumberDisplay(MenuType customerType, bool isReload)
 		{
-			Console.WriteLine("Please Enter Customer Account Number:");
 			bool intValueSelected = false;
-			int keySelection = 9;
-
-			intValueSelected = Int32.TryParse(
-				Console.ReadLine()
-				, out keySelection);
-
-			while (!intValueSelected)
+			int keySelection = 0;
+			if (!isReload)
 			{
-				Console.WriteLine("Please enter a numeric value");
+				Console.WriteLine("Please Enter Customer Account Number:");
 				intValueSelected = Int32.TryParse(
-			   Console.ReadLine()
-			   , out keySelection);
-				continue;
-			}
-			if (keySelection == 9)
-			{
-				if (customerType == MenuType.BankManager)
+					Console.ReadLine()
+					, out keySelection);
+
+				while (!intValueSelected)
 				{
-					DisplayManagersMainScreen();
-				}
+					Console.WriteLine("Please enter a numeric value or (x) to exit.");
+					string lineInput = Console.ReadLine();
+					if (lineInput.Contains("x"))
+					{
+						switch (customerType)
+						{
+							case MenuType.BankManager:
+								DisplayManagersMainScreen();
+								break;
+							case MenuType.Customer:
+								_customerAccountNumber = 0;
+								DisplayStartUpScreen();
+								break;
+						}
+					}
+					intValueSelected = Int32.TryParse(lineInput, out keySelection);
+					continue;
+				}				
 			}
 			else
 			{
-				string accountLookupResult =
-				_viewRepo.GetCustomerViewByAccountNumberView(keySelection);
+				keySelection = _customerAccountNumber;
+			}
 
-				if (customerType == MenuType.BankManager)
+			string accountLookupResult =
+			_viewRepo.GetCustomerViewByAccountNumberView(keySelection);
+
+			if (customerType == MenuType.BankManager)
+			{
+				if (accountLookupResult.Contains("not found"))
 				{
-					if (accountLookupResult.Contains("not found"))
-					{
-						Console.Write(accountLookupResult);
-						Console.WriteLine("Please enter (9) to exit or");
-						ViewCustomerByAccountNumberDisplay(MenuType.BankManager);
-					}
-					Console.WriteLine(accountLookupResult);
-					Console.WriteLine("Please press any key...");
-					Console.ReadKey();
-					DisplayManagersMainScreen();
+					Console.Write(accountLookupResult);
+					ViewCustomerByAccountNumberDisplay(MenuType.BankManager, false);
+				}
+				Console.WriteLine(accountLookupResult);
+				Console.WriteLine("Please press any key...");
+				Console.ReadKey();
+				DisplayManagersMainScreen();
+			}
+			else
+			{
+				if (accountLookupResult.Contains("not found"))
+				{
+					Console.Write(accountLookupResult);
+					Console.WriteLine("Please enter (9) to exit or");
+					ViewCustomerByAccountNumberDisplay(MenuType.Customer, false);
 				}
 				else
 				{
-					if (accountLookupResult.Contains("not found"))
-					{
-						Console.Write(accountLookupResult);
-						Console.WriteLine("Please enter (9) to exit or");
-						ViewCustomerByAccountNumberDisplay(MenuType.Customer);
-					}
-					else
-					{
-						_customerAccountNumber = keySelection;
-					}
-
+					_customerAccountNumber = keySelection;
+					Console.WriteLine(accountLookupResult);
 				}
+
 			}
 		}
 
@@ -280,7 +327,7 @@ namespace Bankingexercise
 					Console.WriteLine("Please press any key...");
 					Console.ReadKey();
 					DisplayManagersMainScreen();
-				}				
+				}
 			}
 		}
 		private static void ViewAllCustomersDisplay()

@@ -22,7 +22,7 @@ namespace BankingCoreTests.DataAccessTests
             decimal pointer = 1M;
             foreach (var item in _dataRepo.CustomerList)
             {
-                item.DebitBalance(pointer);
+                item.DepositMoney(pointer);
                 pointer += 5M;
         }
 
@@ -94,8 +94,8 @@ namespace BankingCoreTests.DataAccessTests
             
             Assert.That(aCustomer.Balance, Is.EqualTo(100M));
             
-            _dRepo.CustomerList[listCount].DebitBalance(100M);
-            _dRepo.CustomerList[listCount].DebitBalance(300M);
+            _dRepo.CustomerList[listCount].DepositMoney(100M);
+            _dRepo.CustomerList[listCount].DepositMoney(300M);
             Assert.That(aCustomer.Balance, Is.EqualTo(500M));
 
             aCustomer = _dRepo.GetCustomerByAccountAndDate(9999

@@ -98,21 +98,20 @@ namespace BankingCore.Users
                 .FirstOrDefault();
         }
 
-        public bool DebitBalance(decimal amountToDebit)
+        public bool DepositMoney(decimal amountToDeposit)
         {
             CheckForInitialBalance();
-
             TransactionHistory.Add(new Transaction
             {
                 AccountNumber = _AccountNumber,
                 Date = DateTime.Now,
-                Balance = (decimal)_balance + amountToDebit,
+                Balance = (decimal)_balance + amountToDeposit,
                 PriorBalance = (decimal)_balance,
-                TransactionAmount = amountToDebit,
+                TransactionAmount = amountToDeposit,
                 TransactionId = Guid.NewGuid()
             });
 
-            _balance += amountToDebit;
+            _balance += amountToDeposit;
             return true;
         }
 
@@ -124,21 +123,26 @@ namespace BankingCore.Users
             }
         }
 
-        public bool CreditBalance(decimal amountToCredit)
+        public bool WithdrawMoney(decimal amountToWithdraw)
         {
             CheckForInitialBalance();
-
-                TransactionHistory.Add(new Transaction
-                {
-                    AccountNumber = _AccountNumber,
-                    Date = DateTime.Now,
-                    Balance = (decimal)_balance - amountToCredit,
-                    PriorBalance = (decimal)_balance,
-                    TransactionAmount = amountToCredit,
-                    TransactionId = Guid.NewGuid()
-                });
-                _balance -= amountToCredit;
-                return true;
+			if (Balance >= amountToWithdraw)
+			{
+				TransactionHistory.Add(new Transaction
+				{
+					AccountNumber = _AccountNumber,
+					Date = DateTime.Now,
+					Balance = (decimal)_balance - amountToWithdraw,
+					PriorBalance = (decimal)_balance,
+					TransactionAmount = amountToWithdraw,
+					TransactionId = Guid.NewGuid()
+				});
+				_balance -= amountToWithdraw;
+				return true;
+			}
+			else
+				return false;
+                
         }
 
         public void AddTransaction(Transaction transAction)

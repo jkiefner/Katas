@@ -12,16 +12,16 @@ namespace BankingCore.Accounts
             Customer destinationCustomer,
             decimal amountOfTransfer)
         {
-            if (originatingCustomer.CreditBalance(amountOfTransfer))
+            if (originatingCustomer.WithdrawMoney(amountOfTransfer))
             {
                 if (destinationCustomer
-                    .DebitBalance(amountOfTransfer))
+                    .DepositMoney(amountOfTransfer))
                 {
                     return true;
                 }
                 else
                 {
-                    originatingCustomer.DebitBalance(amountOfTransfer);
+                    originatingCustomer.DepositMoney(amountOfTransfer);
                     return false;
                 }
             }
