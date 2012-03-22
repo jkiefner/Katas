@@ -101,5 +101,38 @@ namespace BankingCore.DataAccess
             customerOfInterest.UpdateBalance(bal);
             return customerOfInterest;                
         }
+
+        public void SaveDataToXml()
+        {
+            System.Reflection.Assembly ass = System.Reflection.Assembly.GetAssembly(typeof(DataRepository));
+
+            XDocument xmlDoc = new XDocument();
+            XElement xml = new XElement("Customers",
+                from c in _customerList
+                orderby c.AccountNumber
+                select new XElement("Customer",
+                    new XElement("AccountNumber", c.AccountNumber),
+                    new XElement("FirstName", c.FirstName),
+                    new XElement("LastName", c.LastName),
+                    new XElement("CurrencyType", (int)c.CurrencyType)));
+
+            List<Transaction> tList = (_customerList).SelectMany(x => x.TransactionHistory).ToList();
+
+            XElement xml2 = new XElement("Transactions",
+                from c in tList
+                orderby c.AccountNumber
+                select new XElement("Transaction",
+                    new XElement("Date", c.Date.ToShortDateString()),
+                    new XElement("TransactionGuid", c.TransactionId),
+                    new XElement("AccountNumber", c.AccountNumber),
+                    new XElement("Amount", c.TransactionAmount),
+                    new XElement("PriorBalance", c.PriorBalance),
+                    new XElement("Balance", c.Balance),
+                    new XElement("Description", c.Description)));
+
+            XElement xmlAggregate = new XElement("NewDataSet", xml, xml2);
+
+            xmlAggregate.Save("Customers.xml");
+        }
     }
 }

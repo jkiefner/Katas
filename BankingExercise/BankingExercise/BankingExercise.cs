@@ -11,12 +11,15 @@ namespace Bankingexercise
     {
         private static DataRepository _dataRepository;
         private static ViewRepository _viewRepo;
+        private static int _customerAccountNumber = 0;
+
         static void Main(string[] args)
         {
             _dataRepository = DataRepository.GetInstance;
             _viewRepo = new ViewRepository(_dataRepository);
 
             RunBankingOperation();
+            _dataRepository.SaveDataToXml();
         }
 
         private static void RunBankingOperation()
@@ -101,7 +104,7 @@ namespace Bankingexercise
                     DisplayBottomFiveByBalanceScreen();
                     break;
                 case 3:
-                    ViewCustomerByAccountNumberDisplay();
+                    ViewCustomerByAccountNumberDisplay(1);
                     break;
                 case 4:
                     ViewCustomerByBalanceAndDateDisplay();
@@ -117,11 +120,48 @@ namespace Bankingexercise
                     break;
             }
         }
+
         private static void DisplayCustomerMainScreen()
         {
-            Console.WriteLine("display customers");
-            Console.ReadKey();
+            ViewCustomerByAccountNumberDisplay(2);
+
+            Console.WriteLine("\r\nPlease Choose from the follwoing options:\r\n");
+            Console.WriteLine("Withdraw Money from your account\t(1)");
+            Console.WriteLine("Deposit Money into your account\t\t(2)");
+            Console.WriteLine("Transfer Money to another account\t(3)");
+            Console.WriteLine("Change your currency type\t\t(4)");
+            Console.WriteLine("Exit to main menu\t\t\t(9)");
+
+            int keyInput;
+            bool parseSuccessful =
+            Int32.TryParse(Console.ReadKey(true).KeyChar.ToString(), out keyInput);
+
+            if (parseSuccessful)
+            {
+               DisplayCustomerSubScreen(keyInput);
+            }
         }
+        private static void DisplayCustomerSubScreen(int keyInput)
+        {
+            switch (keyInput)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 9:
+                    DisplayStartUpScreen();
+                    break;
+                default:
+                    DisplayStartUpScreen();
+                    break;
+            }
+        }
+
         private static void DisplayBottomFiveByBalanceScreen()
         {
             Console.WriteLine(_viewRepo.GetBottomFiveCustomersByBalanceView());
@@ -130,7 +170,7 @@ namespace Bankingexercise
             DisplayManagersMainScreen();
         }
 
-        private static void ViewCustomerByAccountNumberDisplay()
+        private static void ViewCustomerByAccountNumberDisplay(int customerType)
         {
             Console.WriteLine("Please Enter Customer Account Number:");
             bool intValueSelected = false;
@@ -147,15 +187,37 @@ namespace Bankingexercise
             }
             if (keySelection == 9)
             {
-                DisplayManagersMainScreen();
+                if (customerType == 1)
+                {
+                    DisplayManagersMainScreen();
+                }                
             }
             else
             {
-                Console.WriteLine(_viewRepo
-                    .GetCustomerViewByAccountNumberView(keySelection));
-                Console.WriteLine("Please press any key...");
-                Console.ReadKey();
-                DisplayManagersMainScreen();
+                string accountLookupResult =
+                _viewRepo.GetCustomerViewByAccountNumberView(keySelection);
+
+                if (customerType == 1)
+                {
+                    Console.WriteLine(accountLookupResult);
+                    Console.WriteLine("Please press any key...");
+                    Console.ReadKey();
+                    DisplayManagersMainScreen();
+                }
+                else
+                {
+                    if (accountLookupResult.Contains("not found"))
+                    {
+                        Console.Write(accountLookupResult);
+                        Console.WriteLine("Please enter (9) to exit or");
+                        ViewCustomerByAccountNumberDisplay(2);
+                    }
+                    else
+                    {
+                        _customerAccountNumber = keySelection;
+                    }
+                    
+                }
             }
         }
 
@@ -191,7 +253,7 @@ namespace Bankingexercise
                     continue;
                 }
                 Console.WriteLine(_viewRepo
-                    .GetCustomerViewByAccountNumberView(keySelection));
+                    .GetCustomerViewByAccountAndDate(keySelection,dateOfInterest));
                 Console.WriteLine("Please press any key...");
                 Console.ReadKey();
                 DisplayManagersMainScreen();
@@ -199,8 +261,10 @@ namespace Bankingexercise
         }
         private static void ViewAllCustomersDisplay()
         {
-            Console.WriteLine("ViewAllCustomersDisplay");
+            Console.WriteLine(_viewRepo.GetAllCustomersView());
+            Console.WriteLine("Please press any key...");
             Console.ReadKey();
+            DisplayManagersMainScreen();
         }
         private static void DisplayTopFiveByBalanceScreen()
         {

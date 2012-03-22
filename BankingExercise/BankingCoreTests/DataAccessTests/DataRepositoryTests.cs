@@ -104,5 +104,11 @@ namespace BankingCoreTests.DataAccessTests
             Assert.That(aCustomer.Balance, Is.EqualTo(100M));
 
         }
+
+        [Test]
+        public void canPersistXMLToFileTest()
+        {
+            _dataRepo.SaveDataToXml();
+        }
     }
 }

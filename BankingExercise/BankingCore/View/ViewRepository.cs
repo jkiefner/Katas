@@ -36,14 +36,55 @@ namespace BankingCore.View
             return FormatOutGrid(bottomFiveList, outString);
         }
 
-        //public string GetCustomerViewByAccountAndDate(int accountNumber
-        //    ,DateTime dateOfInterest)
-        //{
-        //    //Customer customerOfInterest =
-               
-        //}
+        public string GetAllCustomersView()
+        {
+            StringBuilder outString = new StringBuilder();
+            outString.AppendLine("\r\nAll Customers ");
+            outString.AppendLine("Account #\tName\t\tBalance");
+            return FormatOutGrid(_dataRepo.CustomerList, outString);
+        }
+
+        public string GetCustomerViewByAccountAndDate(int accountNumber
+            , DateTime dateOfInterest)
+        {
+            Customer customerOfInterest = _dataRepo.GetCustomerByAccountAndDate(
+                accountNumber, dateOfInterest);
+            StringBuilder outString = new StringBuilder();
+            outString.AppendLine(string.Format("\r\nAccount Balance for {0}"
+                , dateOfInterest.ToShortDateString()));
+            if (customerOfInterest != null)
+            {
+                FormatSingleCustomerView(customerOfInterest, outString);
+            }
+            else
+            {
+                outString.AppendLine(string.Format("Account Number:{0} not found..."
+                    , accountNumber));
+            }
+            return outString.ToString();
+        }
 
 
+        private StringBuilder FormatSingleCustomerView(Customer customer, StringBuilder sBuilder)
+        {
+            sBuilder.AppendLine("Account #\tName\t\tBalance");
+            string formattedBalance = string.Empty;
+
+            if (customer.CurrencyType == Accounts.CurrencyType.Euro)
+            {
+                formattedBalance = customer.Balance.ToString("c", new CultureInfo("en-IE", false));
+            }
+            else
+                formattedBalance = customer.Balance.ToString("c");
+            sBuilder.AppendLine(string.Format
+                ("{0}\t\t{1}, {2}\t{3}"
+                , customer.AccountNumber.ToString()
+                , customer.LastName
+                , customer.FirstName
+                , formattedBalance));
+
+            return sBuilder;
+        }
         public string GetCustomerViewByAccountNumberView(int accountNumber)
         {
             Customer customerByAccount =
@@ -52,21 +93,7 @@ namespace BankingCore.View
             outString.AppendLine("\r\nCustomer Account Information");
             if (customerByAccount != null)
             {
-                outString.AppendLine("Account #\tName\t\tBalance");
-                string formattedBalance = string.Empty;
-
-                if (customerByAccount.CurrencyType == Accounts.CurrencyType.Euro)
-                {
-                    formattedBalance = customerByAccount.Balance.ToString("c", new CultureInfo("en-IE", false));
-                }
-                else
-                    formattedBalance = customerByAccount.Balance.ToString("c");
-                outString.AppendLine(string.Format
-                    ("{0}\t\t{1}, {2}\t{3}"
-                    , customerByAccount.AccountNumber.ToString()
-                    , customerByAccount.LastName
-                    , customerByAccount.FirstName
-                    , formattedBalance));
+                FormatSingleCustomerView(customerByAccount, outString);
             }
             else
             {
