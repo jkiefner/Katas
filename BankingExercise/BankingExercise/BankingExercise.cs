@@ -66,7 +66,7 @@ namespace Bankingexercise
 					DisplayCustomerMainScreen(false);
 					break;
 				case 9:
-					break;
+					return;
 				default:
 					DisplayStartUpScreen();
 					break;
@@ -214,15 +214,16 @@ namespace Bankingexercise
 			int keySelection = 0;
 			if (!isReload)
 			{
-				Console.WriteLine("Please Enter Customer Account Number:");
-				intValueSelected = Int32.TryParse(
-					Console.ReadLine()
-					, out keySelection);
+
+				Console.WriteLine("Please Enter Customer Account Number.");
+				string lineInput = Console.ReadLine();
+				intValueSelected = Int32.TryParse(lineInput, out keySelection);
 
 				while (!intValueSelected)
 				{
-					Console.WriteLine("Please enter a numeric value or (x) to exit.");
-					string lineInput = Console.ReadLine();
+					Console.WriteLine("Please Enter Customer Account Number or (x) to exit.");
+					lineInput = Console.ReadLine();
+					intValueSelected = Int32.TryParse(lineInput, out keySelection);
 					if (lineInput.Contains("x"))
 					{
 						switch (customerType)
@@ -236,7 +237,6 @@ namespace Bankingexercise
 								break;
 						}
 					}
-					intValueSelected = Int32.TryParse(lineInput, out keySelection);
 					continue;
 				}				
 			}
@@ -265,7 +265,6 @@ namespace Bankingexercise
 				if (accountLookupResult.Contains("not found"))
 				{
 					Console.Write(accountLookupResult);
-					Console.WriteLine("Please enter (9) to exit or");
 					ViewCustomerByAccountNumberDisplay(MenuType.Customer, false);
 				}
 				else
