@@ -63,7 +63,8 @@ namespace BankingCoreTests.Users
             BankingCore.DataAccess.DataRepository _dRepo =
                 BankingCore.DataAccess.DataRepository.GetInstance;
             Customer testCustomer = _dRepo.GetCustomerByAccountId(111);
-            Assert.That(testCustomer.Balance, Is.EqualTo(100M));
+			testCustomer.CurrencyType = CurrencyType.USDollar;
+            Assert.That(testCustomer.Balance, Is.EqualTo(_dRepo.CustomerList[0].Balance));
         }
         [Test]
         public void CanGetBalanceForCustomerWithoutTransactionHistoryTest()

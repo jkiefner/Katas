@@ -84,28 +84,12 @@ namespace BankingCore.Users
             get
             {
                 CheckForInitialBalance();
-                return (decimal)_balance * GetExchangeRateFactor();
+				return (decimal)_balance * ExchangeRate.GetExchangeRateFactor(_CurrencyType);
             }
         }
 
         #endregion
               
-        public decimal GetExchangeRateFactor()
-        {
-            switch (_CurrencyType)
-            {
-                case CurrencyType.USDollar:
-                    return 1M;
-                    break;
-                case CurrencyType.Euro:
-                    return 0.5M;
-                    break;
-                default:
-                    return 1M;
-                    break;
-            }
-        }
-
         private void CalculateInitialBalance()
         {
             _balance = (decimal)TransactionHistory

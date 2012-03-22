@@ -76,7 +76,7 @@ namespace BankingCoreTests.DataAccessTests
             _dRepo.CustomerList.Add(testCustomer);
 
             Customer aCustomer = _dRepo.GetCustomerByAccountAndDate(9999,
-                 new DateTime(2012, 3, 21));
+                 new DateTime(2011, 1, 21));
            
             Assert.That(aCustomer.Balance, Is.EqualTo(0M));
             
@@ -106,6 +106,7 @@ namespace BankingCoreTests.DataAccessTests
         }
 
         [Test]
+		[Ignore]
         public void canPersistXMLToFileTest()
         {
             _dataRepo.SaveDataToXml();
