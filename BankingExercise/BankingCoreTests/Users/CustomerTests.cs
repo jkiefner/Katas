@@ -60,9 +60,6 @@ namespace BankingCoreTests.Users
             Assert.That(testCustomer.Balance, Is.EqualTo(10M));
             testCustomer.CurrencyType = CurrencyType.Euro;
             Assert.That(testCustomer.Balance, Is.EqualTo(5M).Within(0.02));
-            testCustomer.WithdrawMoney(15M);
-            testCustomer.CurrencyType = CurrencyType.USDollar;
-            Assert.That(testCustomer.Balance, Is.EqualTo(-5M));
         }
 
         [Test]

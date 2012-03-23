@@ -62,6 +62,7 @@ namespace BankingCore.DataAccess
 											   where (int)trans.Element("AccountNumber") == (int)customer.AccountNumber
 											   select new Transaction()
 											   {
+                                                   Date = (DateTime)trans.Element("Date"),
 												   TransactionId = (Guid)trans.Element("TransactionGuid"),
 												   AccountNumber = (int)trans.Element("AccountNumber"),
 												   TransactionAmount = (decimal)trans.Element("Amount"),
@@ -109,8 +110,6 @@ namespace BankingCore.DataAccess
 
 		public void SaveDataToXml()
 		{
-			System.Reflection.Assembly ass = System.Reflection.Assembly.GetAssembly(typeof(DataRepository));
-
 			XDocument xmlDoc = new XDocument();
 			XElement xml = new XElement("Customers",
 				from c in _customerList
@@ -127,7 +126,7 @@ namespace BankingCore.DataAccess
 				from c in tList
 				orderby c.AccountNumber
 				select new XElement("Transaction",
-					new XElement("Date", c.Date.ToShortDateString()),
+					new XElement("Date", c.Date),
 					new XElement("TransactionGuid", c.TransactionId),
 					new XElement("AccountNumber", c.AccountNumber),
 					new XElement("Amount", c.TransactionAmount),

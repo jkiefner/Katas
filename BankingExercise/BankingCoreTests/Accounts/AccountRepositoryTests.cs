@@ -39,5 +39,27 @@ namespace BankingCoreTests.Accounts
             Assert.That(destinationCustomer.Balance, Is.EqualTo(10.00));
             Assert.That(originatingCustomer.Balance, Is.EqualTo(90.00));
         }
+
+        [Test]
+        public void TransferFundsWithTooSmallBalanceWillFailTest()
+        {
+            Customer originatingCustomer = new Customer
+            {
+                AccountNumber = 111,
+                FirstName = "John",
+                LastName = "Doe"
+            };
+            Customer destinationCustomer = new Customer
+            {
+                AccountNumber = 222,
+                FirstName = "Moe",
+                LastName = "Monee"
+            };
+
+            originatingCustomer.DepositMoney(5M);
+            bool result = AccountRepository.TransferFunds(originatingCustomer
+                , destinationCustomer, 500M);
+            Assert.That(result, Is.False);
+        }
     }
 }

@@ -103,17 +103,17 @@ namespace BankingCore.View
             return outString.ToString();
         }
 
-		public bool DepostMoneyIntoAccountView(int accountNumber,decimal amountToDeposit)
-		{
-			Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
-			return thisCustomer.DepositMoney(amountToDeposit);
-		}
+        public bool DepostMoneyIntoAccountView(int accountNumber, decimal amountToDeposit)
+        {
+            Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
+            return thisCustomer.DepositMoney(amountToDeposit);
+        }
 
-		public bool WithDrawMoneyFromAccountView(int accountNumber,decimal amountToWithdraw)
-		{
-			Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
-			return thisCustomer.WithdrawMoney(amountToWithdraw);
-		}
+        public bool WithDrawMoneyFromAccountView(int accountNumber, decimal amountToWithdraw)
+        {
+            Customer thisCustomer = _dataRepo.GetCustomerByAccountId(accountNumber);
+            return thisCustomer.WithdrawMoney(amountToWithdraw);
+        }
 
         private string FormatSingleAccountGrid(List<Customer> customerList
             , StringBuilder outputString)
@@ -140,15 +140,57 @@ namespace BankingCore.View
             return outString.ToString();
         }
 
-		public bool CheckForGoodAccount(int accountNumber)
-		{
-			Customer customerToLookup = _dataRepo.GetCustomerByAccountId(accountNumber);
-			if (customerToLookup != null)
-			{
-				return true;
-			}
-			else
-				return false;
-		}
+        public bool TransferCustomerFunds(int originatingAccountNumber,
+            int destinationAccountNumber,
+            decimal amountToTransfer)
+        {
+            Customer originalCustomer = _dataRepo.GetCustomerByAccountId(originatingAccountNumber);
+            Customer destinationCustomer = _dataRepo.GetCustomerByAccountId(destinationAccountNumber);
+
+            return Accounts.AccountRepository.TransferFunds(originalCustomer,
+                       destinationCustomer,
+                       amountToTransfer);
+        }
+
+        public string ListCurrencyTypes()
+        {
+            StringBuilder outputString = new StringBuilder();
+            int i = 1;
+            foreach (string name in System.Enum.GetNames(typeof(Accounts.CurrencyType)))
+            {
+                outputString.AppendLine(string.Format("{0}\t({1})", name, i));
+                i += 1;
+            }
+            return outputString.ToString();
+        }
+
+        public bool ChangeCustomerCurrencyType(int accountNumber, int currencyType)
+        {
+            bool result = false;
+            Customer customer = _dataRepo.GetCustomerByAccountId(accountNumber);
+            switch(currencyType)
+            {
+                case 1:
+                    customer.CurrencyType = Accounts.CurrencyType.USDollar;
+                    result = true;
+                    break;
+                case 2:
+                    customer.CurrencyType = Accounts.CurrencyType.Euro;
+                    result = true;
+                    break;
+            }
+            return result;
+        }
+
+        public bool CheckForGoodAccount(int accountNumber)
+        {
+            Customer customerToLookup = _dataRepo.GetCustomerByAccountId(accountNumber);
+            if (customerToLookup != null)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
