@@ -177,21 +177,20 @@ namespace Bankingexercise
         {
             Console.WriteLine(string.Format("Please enter account number to transfer to."));
             int accountNumber;
-            bool parseSuccessful =
-            Int32.TryParse(Console.ReadLine().ToString(), out accountNumber);
+            bool parseSuccessful = Int32.TryParse(Console.ReadLine().ToString(), out accountNumber);
             bool escapeWasPressed = false;
             while (!parseSuccessful)
             {
                 Console.WriteLine("Please enter a numeric value greater than 0 or (x) to exit:");
-                if (Console.ReadLine().ToString() == "x")
+                string input = Console.ReadLine();
+                if (input.ToUpper().Equals("X"))
                 {
                     escapeWasPressed = true;
-                    break;
+                    parseSuccessful = true;
                 }
                 else
                 {
-                    Int32.TryParse(Console.ReadLine().ToString(), out accountNumber);
-                    continue;
+                    parseSuccessful = Int32.TryParse(input, out accountNumber);
                 }
             }
             if (escapeWasPressed)
@@ -206,70 +205,71 @@ namespace Bankingexercise
                         accountNumber));
                     DisplayCustomerMainScreen(true);
                 }
-
-                Console.WriteLine(string.Format("Please enter amount to transfer."));
-                decimal amountToTransfer;
-                parseSuccessful =
-                decimal.TryParse(Console.ReadLine().ToString(), out amountToTransfer);
-
-                while (!parseSuccessful)
-                {
-                    Console.WriteLine("Please enter a numeric value greater than 0 or (x) to exit:");
-                    if (Console.ReadLine().ToString() == "x")
-                    {
-                        escapeWasPressed = true;
-                        break;
-                    }
-                    else
-                    {
-                        decimal.TryParse(Console.ReadLine().ToString(), out amountToTransfer);
-                        continue;
-                    }
-                }
-                if (escapeWasPressed)
-                {
-                    DisplayCustomerMainScreen(true);
-                }
                 else
                 {
-                    Console.WriteLine(string.Format("\r\nTransferring {0:C} to account number {1}"
-                    , amountToTransfer, accountNumber));
-                    Console.WriteLine("Please enter (Y) to continue or (X) to cancel transfer of funds");
-                    string inputValue = Console.ReadKey().KeyChar.ToString().ToUpper();
-                    bool escapePressed = false;
-                    while (!inputValue.Equals("Y"))
+                    Console.WriteLine(string.Format("Please enter amount to transfer."));
+                    decimal amountToTransfer;
+                    parseSuccessful = decimal.TryParse(Console.ReadLine(), out amountToTransfer);
+
+                    while (!parseSuccessful)
                     {
-                        if (inputValue.Equals("X"))
+                        Console.WriteLine("Please enter a numeric value greater than 0 or (x) to exit:");
+                        string inputString = Console.ReadLine();
+                        if (inputString.ToUpper().Equals("X"))
                         {
-                            escapePressed = true;
-                            break;
+                            escapeWasPressed = true;
+                            parseSuccessful = true;
                         }
                         else
                         {
-                            Console.WriteLine("\r\nPlease enter an \"X\" or \"Y\"");
-                            inputValue = Console.ReadKey().KeyChar.ToString().ToUpper();
+                            parseSuccessful = decimal.TryParse(inputString, out amountToTransfer);
                         }
                     }
-                    if (escapePressed)
+                    if (escapeWasPressed)
                     {
                         DisplayCustomerMainScreen(true);
                     }
                     else
                     {
-                        if (inputValue.Equals("Y"))
+                        Console.WriteLine(string.Format("\r\nTransferring {0:C} to account number {1}"
+                        , amountToTransfer, accountNumber));
+                        Console.WriteLine("Please enter (Y) to continue or (X) to cancel transfer of funds");
+                        string inputValue = Console.ReadKey().KeyChar.ToString().ToUpper();
+                        bool escapePressed = false;
+                        while (!inputValue.Equals("Y"))
                         {
-                            if (_viewRepo.TransferCustomerFunds(_customerAccountNumber
-                                , accountNumber, amountToTransfer))
+                            if (inputValue.Equals("X"))
                             {
-                                Console.WriteLine(string.Format(
-                                    "\r\n{0} dollars was transferred to account {1}", amountToTransfer
-                                    , accountNumber));
+                                escapePressed = true;
+                                inputValue = "Y";
                             }
                             else
                             {
-                                Console.WriteLine("\r\nThere was a problem transferring the funds. Please check your balance.");
+                                Console.WriteLine("\r\nPlease enter an \"X\" or \"Y\"");
+                                inputValue = Console.ReadKey().KeyChar.ToString().ToUpper();
                             }
+                        }
+                        if (escapePressed)
+                        {
                             DisplayCustomerMainScreen(true);
+                        }
+                        else
+                        {
+                            if (inputValue.Equals("Y"))
+                            {
+                                if (_viewRepo.TransferCustomerFunds(_customerAccountNumber
+                                    , accountNumber, amountToTransfer))
+                                {
+                                    Console.WriteLine(string.Format(
+                                        "\r\n{0} dollars was transferred to account {1}", amountToTransfer
+                                        , accountNumber));
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\r\nThere was a problem transferring the funds. Please check your balance.");
+                                }
+                                DisplayCustomerMainScreen(true);
+                            }
                         }
                     }
                 }
