@@ -242,7 +242,7 @@ namespace Bankingexercise
                         if (inputValue.Equals("X"))
                         {
                             escapePressed = true;
-                            break;                           
+                            break;
                         }
                         else
                         {
@@ -271,8 +271,8 @@ namespace Bankingexercise
                             }
                             DisplayCustomerMainScreen(true);
                         }
-                    }                   
-                }                
+                    }
+                }
             }
         }
 
@@ -290,16 +290,16 @@ namespace Bankingexercise
             bool escapeWasPressed = false;
             while (!parseSuccessful)
             {
-                Console.WriteLine("Please enter a numeric value greater than or (x) to exit:");
-                if (Console.ReadLine().ToString().ToUpper().Equals("X"))
+                Console.WriteLine("Please enter a numeric value greater than 0 or (x) to exit:");
+                string input = Console.ReadLine();
+                if (input.ToUpper().Equals("X"))
                 {
                     escapeWasPressed = true;
                     break;
                 }
                 else
                 {
-                    decimal.TryParse(Console.ReadLine().ToString(), out keyInput);
-                    continue;
+                    parseSuccessful = decimal.TryParse(input, out keyInput);
                 }
             }
             if (escapeWasPressed)
@@ -340,7 +340,6 @@ namespace Bankingexercise
                     }
                 }
             }
-
         }
 
         private static void DisplayBottomFiveByBalanceScreen()
@@ -379,7 +378,6 @@ namespace Bankingexercise
                                 return false;
                         }
                     }
-                    continue;
                 }
             }
             else
@@ -395,14 +393,17 @@ namespace Bankingexercise
                 if (accountLookupResult.Contains("not found"))
                 {
                     Console.Write(accountLookupResult);
+                    ViewCustomerByAccountNumberDisplay(MenuType.BankManager, false);
                     return false;
-                    //ViewCustomerByAccountNumberDisplay(MenuType.BankManager, false);
                 }
-                Console.WriteLine(accountLookupResult);
-                Console.WriteLine("Please press any key...");
-                Console.ReadKey();
-                DisplayManagersMainScreen();
-                return false;
+                else
+                {
+                    Console.WriteLine(accountLookupResult);
+                    Console.WriteLine("Please press any key...");
+                    Console.ReadKey();
+                    DisplayManagersMainScreen();
+                    return false;
+                }
             }
             else
             {
@@ -455,7 +456,6 @@ namespace Bankingexercise
                     Console.WriteLine("Please enter a date in this format mm-dd-yyyy ");
                     successfullDateInput = DateTime.TryParse(
                     Console.ReadLine(), out dateOfInterest);
-                    continue;
                 }
                 string accountLookupResult = _viewRepo
                     .GetCustomerViewByAccountAndDate(keySelection, dateOfInterest);
@@ -491,7 +491,6 @@ namespace Bankingexercise
                 intValueSelected = Int32.TryParse(
                Console.ReadKey().KeyChar.ToString()
                , out keySelection);
-                continue;
             }
             if (_viewRepo.ChangeCustomerCurrencyType(_customerAccountNumber
                 , keySelection))
