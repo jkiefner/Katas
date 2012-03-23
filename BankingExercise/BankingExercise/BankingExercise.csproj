@@ -8,8 +8,8 @@
     <ProjectGuid>{908A2887-78ED-4579-9EF3-6779F6ED8E58}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankingExcercise</RootNamespace>
-    <AssemblyName>BankingExcercise</AssemblyName>
+    <RootNamespace>BankingExercise</RootNamespace>
+    <AssemblyName>BankingExercise</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankingExercise.cs" />
+    <Compile Include="MenuScreens.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

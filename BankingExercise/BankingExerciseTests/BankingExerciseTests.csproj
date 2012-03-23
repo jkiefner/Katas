@@ -8,8 +8,8 @@
     <ProjectGuid>{54D82BEB-8D9A-4BFE-A685-BE651833C855}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankingExcerciseTests</RootNamespace>
-    <AssemblyName>BankingExcerciseTests</AssemblyName>
+    <RootNamespace>BankingExerciseTests</RootNamespace>
+    <AssemblyName>BankingExerciseTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
