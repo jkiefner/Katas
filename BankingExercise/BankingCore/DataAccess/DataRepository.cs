@@ -110,7 +110,6 @@ namespace BankingCore.DataAccess
 
 		public void SaveDataToXml()
 		{
-			XDocument xmlDoc = new XDocument();
 			XElement xml = new XElement("Customers",
 				from c in _customerList
 				orderby c.AccountNumber

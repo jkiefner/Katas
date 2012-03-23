@@ -12,7 +12,6 @@ namespace Bankingexercise
         private static DataRepository _dataRepository;
         private static ViewRepository _viewRepo;
         private static int _customerAccountNumber = 0;
-        private static int _transferAccountNumber = 0;
 
         static void Main(string[] args)
         {
